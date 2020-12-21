@@ -33,7 +33,6 @@ export class ListTransactionComponent implements OnInit {
     this.isLoading = true;
     this.transactionService.getAllTransaction(this.page, this.size)
       .subscribe(data => {
-        console.log(data.content);
         this.loadedPosts = data.content;
         this.totalItems = data.totalElements;
         this.isLoading = false;
