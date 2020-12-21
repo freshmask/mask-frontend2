@@ -1,0 +1,198 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<!-- Bootstrap NavBar -->
+<nav class="navbar navbar-expand-md ">
+  <button style="border-color: #e67e22" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span style="color: #FFFFFF; width: 12px" class="fa fa-bars fa-fw"></span>
+  </button>
+  <a class="navbar-brand" (click)="toDashboard()">
+    <img src="./assets/logo-putih.png" width="70" height="40" class="d-inline-block align-top" alt="">
+  </a>
+  <div>
+
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="dropdown mt-2  mr-4">
+        <a class="dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-expanded="false">  <span style="color: #e67e22" class="fa fa-user fa-fw"></span> Halo {{name}} <span class="caret"></span></a>
+        <ul style="width: 10px" class="dropdown-menu dropdown-cart" role="menu">
+          <li>
+                  <span (click)="toProfile()" class="item">
+                    <span class="item-left">
+                        <span class="item-info">
+                            <span>Profil Admin</span>
+                        </span>
+                    </span>
+                </span>
+          </li>
+          <li>
+                  <span (click)="onLogout()" class="item">
+                    <span class="item-left">
+                        <span  class="item-info">
+                            <span>Logout</span>
+                        </span>
+                    </span>
+                </span>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link text-white" (click)="toDashboard()" >Home
+          <span class="sr-only">(current)</span></a>
+      </li>
+      <!-- This menu is hidden in bigger devices with d-sm-none.
+     The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+      <li style="border-color: #e67e22" class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle text-white" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Menu </a>
+        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+          <a class="dropdown-item"  >Notif Klaim <span class="menu-collapsed"><span class="badge badge-pill badge-warning ml-2">{{totalNumberClaim}}</span></span></a>
+          <a class="dropdown-item"  (click)="toDashboard()"  >Dashboard</a>
+          <a class="dropdown-item" (click)="listUser()">User</a>
+          <a class="dropdown-item"  (click)="toListAllProduct()" >Produk</a>
+          <a class="dropdown-item"  (click)="toListAllTransaction()">Transaksi</a>
+          <a class="dropdown-item" (click)="toClaimPAR()">Klaim</a>
+        </div>
+      </li><!-- Smaller devices menu END -->
+    </ul>
+  </div>
+</nav><!-- NavBar END -->
+<!-- Bootstrap row -->
+
+
+<div class="row" id="body-row">
+  <!-- Sidebar -->
+  <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+    <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+    <!-- Bootstrap List Group -->
+    <ul class="list-group">
+      <!-- Separator with title -->
+      <li  class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <h6 style="color: black; margin-top: 20px; margin-bottom: 20px">MENU</h6>
+      </li>
+      <!-- /END Separator -->
+      <!-- Menu with submenu -->
+
+      <a routerLink="/admin/dashboard" class="bg-light list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span ><i class="fa fa-bell mr-3" aria-hidden="true"></i></span>
+          <span class="menu-collapsed">Notif Klaim <span class="badge badge-pill badge-warning ml-2">{{totalNumberClaim}}</span></span>
+        </div>
+      </a>
+      <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div (click)="toDashboard()" class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-dashboard fa-fw mr-3"></span>
+          <span class="menu-collapsed">Dashboard</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu1' class="collapse sidebar-submenu">
+        <a (click)="toListAdmin()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Admin</span>
+        </a>
+      </div>
+
+      <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-user fa-fw mr-3"></span>
+          <span class="menu-collapsed">User</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu2' class="collapse sidebar-submenu">
+        <a (click)="listUser()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua User</span>
+        </a>
+      </div>
+
+      <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-shopping-basket fa-fw mr-3"></span>
+          <span class="menu-collapsed">Produk</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu3' class="collapse sidebar-submenu">
+        <a (click)="toListAllProduct()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua Produk</span>
+        </a>
+        <a (click)="toListPa()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Personal Accident</span>
+        </a>
+        <a (click)="toListPar()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Property All Risk</span>
+        </a>
+        <a (click)="toListTravel()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Travel Insurance</span>
+        </a>
+      </div>
+
+      <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-shopping-cart fa-fw mr-3"></span>
+          <span class="menu-collapsed">Transaksi</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu4' class="collapse sidebar-submenu">
+        <a (click)="toListAllTransaction()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua Transaksi</span>
+        </a>
+        <a (click)="toTransacrionTravel()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Perjalanan</span>
+        </a>
+        <a (click)="toTransactionPAR()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Properti</span>
+        </a>
+        <a (click)="toTransactionPA()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Kecelakaan Diri</span>
+        </a>
+        <a (click)="toTransactionByPolisPeriod()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Dari Periode Polis</span>
+        </a>
+        <a (click)="toTransactionByPolis()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Dari Status Polis</span>
+        </a>
+        <a (click)="toTransactionByPromo()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Dari Status Promo</span>
+        </a>
+      </div>
+
+      <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-newspaper-o fa-fw mr-3"></span>
+          <span class="menu-collapsed">Klaim</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu5' class="collapse sidebar-submenu">
+        <a (click)="toClaimPAR()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Klaim Properti<span class="badge badge-pill badge-warning ml-2">{{numberClaimPAR}}</span></span>
+        </a>
+        <a (click)="toClaimPA()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Klaim Kecelakaan Diri<span class="badge badge-pill badge-warning ml-2">{{numberClaimPA}}</span></span>
+        </a>
+        <a (click)="toClaimTravel()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Klaim Perjalanan<span class="badge badge-pill badge-warning ml-2">{{numberClaimTravel}}</span></span>
+        </a>
+      </div>
+      <!-- Separator without title -->
+<!--      <li class="list-group-item sidebar-separator menu-collapsed"></li>-->
+      <!-- /END Separator -->
+<!--      <a  class="bg-light list-group-item list-group-item-action">-->
+<!--        <div class="d-flex w-100 justify-content-start align-items-center">-->
+<!--          <span class="fa fa-question fa-fw mr-3"></span>-->
+<!--          <span class="menu-collapsed">Bantuan</span>-->
+<!--        </div>-->
+<!--      </a>-->
+    </ul><!-- List Group END-->
+  </div>
+</div>

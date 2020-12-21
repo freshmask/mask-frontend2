@@ -1,0 +1,270 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<!-- Bootstrap NavBar -->
+<nav style="background-color: #2D3D53" class="navbar navbar-expand-md ">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" routerLink="/admin/dashboard">
+    <img src="./assets/logo-putih.png" width="70" height="40" class="d-inline-block align-top" alt="">
+  </a>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/admin/dashboard" >
+          Home <span class="sr-only">(current)</span></a>
+      </li>
+      <!-- This menu is hidden in bigger devices with d-sm-none.
+     The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Menu </a>
+        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+          <a class="dropdown-item" href="#top">Dashboard</a>
+          <a class="dropdown-item" href="#top">Profile</a>
+          <a class="dropdown-item" href="#top">Customer</a>
+          <a class="dropdown-item" href="#top">Etc ...</a>
+        </div>
+      </li><!-- Smaller devices menu END -->
+    </ul>
+  </div>
+</nav><!-- NavBar END -->
+<!-- Bootstrap row -->
+<div class="row" id="body-row">
+  <!-- Sidebar -->
+  <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+    <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+    <!-- Bootstrap List Group -->
+    <ul class="list-group">
+      <!-- Separator with title -->
+      <li  class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <small>MAIN MENU</small>
+      </li>
+      <!-- /END Separator -->
+      <!-- Menu with submenu -->
+      <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-dashboard fa-fw mr-3"></span>
+          <span class="menu-collapsed">Dashboard</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu1' class="collapse sidebar-submenu">
+        <a routerLink="admin/dashboard/list" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Admin</span>
+        </a>
+      </div>
+
+      <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-user fa-fw mr-3"></span>
+          <span class="menu-collapsed">User</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu2' class="collapse sidebar-submenu">
+        <a routerLink="/admin/user" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">All User</span>
+        </a>
+      </div>
+
+      <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-user fa-fw mr-3"></span>
+          <span class="menu-collapsed">Product</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu3' class="collapse sidebar-submenu">
+        <a routerLink="/admin/product/package" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">List All Product</span>
+        </a>
+        <a routerLink="/admin/product/pa" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Product Personal Accident</span>
+        </a>
+        <a routerLink="/admin/product/par" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Product Property All Risk</span>
+        </a>
+        <a routerLink="/admin/product/travel" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Product Travel</span>
+        </a>
+      </div>
+
+      <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-calendar fa-fw mr-3"></span>
+          <span class="menu-collapsed">Transaction</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu4' class="collapse sidebar-submenu">
+        <a routerLink="/admin/transaction" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">List Transaction</span>
+        </a>
+        <a routerLink="/admin/transaction/history" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">History Transaction</span>
+        </a>
+      </div>
+
+
+      <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-calendar fa-fw mr-3"></span>
+          <span class="menu-collapsed">Claim</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu5' class="collapse sidebar-submenu">
+        <a routerLink="/admin/transaction" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">List Claim</span>
+        </a>
+        <a routerLink="/admin/transaction/history" class="list-group-item list-group-item-action bg-dark text-white">
+          <span class="menu-collapsed">Detail Claim</span>
+        </a>
+      </div>
+
+
+
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-envelope-o fa-fw mr-3"></span>
+          <span class="menu-collapsed">Notification <span class="badge badge-pill badge-primary ml-2">5</span></span>
+        </div>
+      </a>
+      <!-- Separator without title -->
+      <li class="list-group-item sidebar-separator menu-collapsed"></li>
+      <!-- /END Separator -->
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-question fa-fw mr-3"></span>
+          <span class="menu-collapsed">Help</span>
+        </div>
+      </a>
+      <a href="#top" data-toggle="sidebar-colapse" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span id="collapse-icon" class="fa fa-2x mr-3"></span>
+          <span id="collapse-text" class="menu-collapsed">Collapse</span>
+        </div>
+      </a>
+    </ul><!-- List Group END-->
+  </div><!-- sidebar-container END -->
+
+
+
+<div style="padding: 20px;" class="container" ng-app="sortApp" ng-controller="mainController">
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search da Fish" ng-model="searchFish">
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-striped">
+
+    <thead>
+    <tr>
+      <td>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Name
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Identity Number
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Identity Type
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Phone Number
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Email
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Customer Name
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Customer Relationship
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Customer Phone Number
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Customer Email
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Transaction Id
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+          Action
+          <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+      <td>dss</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>dss</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>dss</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>
+        <button class="btn btn-primary">detail</button>
+      </td>
+    </tr>
+    <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+      <td>dss</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>dss</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>dss</td>
+      <td>dd</td>
+      <td>dd</td>
+      <td>
+        <button class="btn btn-primary">detail</button>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+</div>
+</div><!-- body-row END -->

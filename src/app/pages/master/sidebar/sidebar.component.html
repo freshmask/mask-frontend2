@@ -1,0 +1,201 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<!-- Bootstrap NavBar -->
+<nav class="navbar navbar-expand-md ">
+  <button style="border-color: #e67e22" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" routerLink="/admin/dashboard">
+    <img src="./assets/logo-putih.png" width="70" height="40" class="d-inline-block align-top" alt="">
+  </a>
+  <div>
+
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+    <ul class="navbar-nav ml-auto">
+
+
+      <li class="dropdown mt-2  mr-4">
+
+        <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-expanded="false">  <span class="fa fa-user fa-fw"></span> Akun <span class="caret"></span></a>
+        <ul style="width: 10px" class="dropdown-menu dropdown-cart" role="menu">
+          <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <span class="item-info">
+                            <span>Profil Admin</span>
+                        </span>
+                    </span>
+                </span>
+          </li>
+          <li>
+                  <span (click)="onLogout()" class="item">
+                    <span class="item-left">
+                        <span  class="item-info">
+                            <span>Logout</span>
+                        </span>
+                    </span>
+                </span>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link text-white" routerLink="/admin/dashboard" >Home
+          <span class="sr-only">(current)</span></a>
+      </li>
+      <!-- This menu is hidden in bigger devices with d-sm-none.
+     The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+      <li style="border-color: #e67e22" class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Menu </a>
+        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+          <a class="dropdown-item" routerLink="/admin/user">User</a>
+          <a class="dropdown-item" routerLink="admin/product/all">Produk</a>
+          <a class="dropdown-item" routerLink="/admin/transaction">Transaksi</a>
+          <a class="dropdown-item" routerLink="/admin/submission">Klaim</a>
+        </div>
+      </li><!-- Smaller devices menu END -->
+    </ul>
+  </div>
+</nav><!-- NavBar END -->
+<!-- Bootstrap row -->
+<div class="row" id="body-row">
+  <!-- Sidebar -->
+  <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+    <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+    <!-- Bootstrap List Group -->
+    <ul class="list-group">
+      <!-- Separator with title -->
+      <li  class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <h4 style="color: black; margin-top: 20px; margin-bottom: 20px">MENU</h4>
+      </li>
+      <!-- /END Separator -->
+      <!-- Menu with submenu -->
+
+      <a routerLink="/admin/dashboard" class="bg-light list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-envelope-o fa-fw mr-3"></span>
+          <span class="menu-collapsed">Notifikasi <span class="badge badge-pill badge-warning ml-2">5</span></span>
+        </div>
+      </a>
+      <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-dashboard fa-fw mr-3"></span>
+          <span class="menu-collapsed">Dashboard</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu1' class="collapse sidebar-submenu">
+        <a routerLink="admin/dashboard/list" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Admin</span>
+        </a>
+      </div>
+
+      <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-user fa-fw mr-3"></span>
+          <span class="menu-collapsed">User</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu2' class="collapse sidebar-submenu">
+        <a routerLink="/admin/user" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua User</span>
+        </a>
+      </div>
+
+      <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-shopping-basket fa-fw mr-3"></span>
+          <span class="menu-collapsed">Produk</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <!-- Submenu content -->
+      <div id='submenu3' class="collapse sidebar-submenu">
+        <a routerLink="/admin/product/all" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua Produk</span>
+        </a>
+        <a routerLink="/admin/product/pa" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Personal Accident</span>
+        </a>
+        <a routerLink="/admin/product/property" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Property All Risk</span>
+        </a>
+        <a routerLink="/admin/product/travel" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Travel Insurance</span>
+        </a>
+      </div>
+
+      <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-shopping-cart fa-fw mr-3"></span>
+          <span class="menu-collapsed">Transaksi</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu4' class="collapse sidebar-submenu">
+        <a routerLink="/admin/transaction" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua Transaksi</span>
+        </a>
+        <a routerLink="/admin/transaction/byPolis" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Dari Status Polis</span>
+        </a>
+        <a routerLink="/admin/transaction/byPromo" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Dari Status Promo</span>
+        </a>
+        <a routerLink="/admin/transaction/byUser" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Dari User</span>
+        </a>
+        <a routerLink="/admin/transaction/talist" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Perjalanan</span>
+        </a>
+        <a routerLink="/admin/transaction/parlist" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Property All Risk</span>
+        </a>
+        <a routerLink="/admin/transaction/palist" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Transaksi Personal Accident</span>
+        </a>
+      </div>
+
+
+      <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-newspaper-o fa-fw mr-3"></span>
+          <span class="menu-collapsed">Klaim</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu5' class="collapse sidebar-submenu">
+        <a routerLink="/admin/submission" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">List Semua Klaim</span>
+        </a>
+        <a routerLink="/admin/submission/detail" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Detail Klaim</span>
+        </a>
+      </div>
+
+
+
+      <!-- Separator without title -->
+      <li class="list-group-item sidebar-separator menu-collapsed"></li>
+      <!-- /END Separator -->
+      <a  class="bg-light list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-question fa-fw mr-3"></span>
+          <span class="menu-collapsed">Bantuan</span>
+        </div>
+      </a>
+    </ul><!-- List Group END-->
+  </div><!-- sidebar-container END -->
+  <!-- MAIN -->
+  <div class="col p-4">
+  </div><!-- Main Col END -->
+</div><!-- body-row END -->

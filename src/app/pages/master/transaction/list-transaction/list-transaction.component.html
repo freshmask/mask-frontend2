@@ -1,0 +1,182 @@
+<app-thesidebar></app-thesidebar>
+<div class="container-table bg-white">
+  <div style="padding: 20px;" class="container" ng-app="sortApp" ng-controller="mainController">
+    <div class="section-title mt-2" data-aos="zoom-out">
+      <h2>DAFTAR</h2>
+    </div>
+    <h4 style="color: #EF8526; margin-top: -20px">List Semua Transaksi</h4>
+    <div *ngIf="isLoading" class="text-center">
+      <img src="/assets/img/loadings.gif" alt="description of gif" />
+    </div>
+    <button style="background-color: #e67e22; float: right; margin-top: -20px" class="btn btn-info">
+      <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+      </a>
+    </button>
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <input [(ngModel)]="searchByName" name="searchByName" (keyup)="searchLive()" type="search" class="form-control"
+                 placeholder="Cari berdasarkan nomor polis">
+        </div>
+      </div>
+    </form>
+
+    <span *ngIf="!isSearch">
+    <div style="overflow-x:auto">
+    <table id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+
+      <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Waktu Transaksi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Pengguna
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Status Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Status Klaim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let trans of loadedPosts | paginate: { itemsPerPage: size, currentPage: page, totalItems: totalItems }; let i = index"
+          ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{i + 1}}</td>
+        <td>{{trans.creationDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{trans.users.name}}</td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.trxpaId}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.trxparId}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.id}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusPolis}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.statusPolis}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.statusPolis}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusClaim}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.statusClaim}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.statusClaim}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.customerPA.name}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.customerPAR.name}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.customerTravel.name}}</p>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+    </div>
+      <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"></pagination-controls>
+    </span>
+    <span *ngIf="isSearch">
+    <div style="overflow-x:auto">
+    <table class="table table-bordered table-striped" style="font-size: 14px">
+
+      <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Waktu Transaksi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Pengguna
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Status Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Status Klaim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let trans of transactionList | paginate: { itemsPerPage: size, currentPage: page, totalItems: totalItems }; let i = index"
+          ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{i + 1}}</td>
+        <td>{{trans.creationDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{trans.users.name}}</td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.trxpaId}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.trxparId}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.id}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusPolis}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.statusPolis}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.statusPolis}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusClaim}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.statusClaim}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.statusClaim}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.customerPA.name}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.customerPAR.name}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.customerTravel.name}}</p>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+    </div>
+      <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"></pagination-controls>
+    </span>
+  </div>
+</div>

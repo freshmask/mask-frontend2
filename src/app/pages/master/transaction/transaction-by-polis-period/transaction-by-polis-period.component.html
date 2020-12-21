@@ -1,0 +1,143 @@
+<app-thesidebar></app-thesidebar>
+<div class="container-table bg-white">
+  <div class="section-title mt-2" data-aos="zoom-out">
+    <h2>DAFTAR LIST TRANSAKSI</h2>
+  </div>
+  <h4 style="color: #EF8526; margin-top: -20px">Berdasarkan Status Polis Aktif per Periode</h4>
+  <div class="row" style="margin-top: 50px">
+    <div style="width: 30%; margin-right: 30px; margin-left: 10px" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+      <label for="example">Tanggal Mulai</label>
+      <input [(ngModel)]="date1" placeholder="Select date" type="date" id="example" class="form-control">
+    </div>
+    <div style="width: 30%" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+      <label for="example1">Tanggal Selesai</label>
+      <input [(ngModel)]="date2" placeholder="Select date" type="date" id="example1" class="form-control">
+    </div>
+    <button style="margin-top: 30px"  class="btn btn-custom ml-4" (click)="getPolisPeriode(date1, date2)">Cari</button>
+  </div>
+  <button style="float: right; margin-bottom: 20px; margin-right: 136px" class="btn btn-custom">
+    <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+    </a>
+  </button>
+
+
+<!--  <div class="row">-->
+<!--    <input type="date" [(ngModel)]="date1">-->
+<!--    <input type="date" [(ngModel)]="date2">-->
+<!--    -->
+<!--  </div>-->
+
+<!--  <div class="container">-->
+<!--    <div class="row">-->
+<!--      <div class="btn-group show-on-hover">-->
+<!--        <button style="border-color: #e67e22" type="button" class="btn btn-default dropdown-toggle mr-2" data-toggle="dropdown">-->
+<!--          Bulan-->
+<!--        </button>-->
+<!--        <ul class="dropdown-menu" role="menu">-->
+<!--          <li><a (click)="getMonth(1)">Januari</a></li>-->
+<!--          <li><a (click)="getMonth(2)">Februari</a></li>-->
+<!--          <li><a (click)="getMonth(3)">Maret</a></li>-->
+<!--          <li><a (click)="getMonth(4)">April</a></li>-->
+<!--          <li><a (click)="getMonth(5)">Mei</a></li>-->
+<!--          <li><a (click)="getMonth(6)">Juni</a></li>-->
+<!--          <li><a (click)="getMonth(7)">Juli</a></li>-->
+<!--          <li><a (click)="getMonth(8)">Agustus</a></li>-->
+<!--          <li><a (click)="getMonth(9)">September</a></li>-->
+<!--          <li><a (click)="getMonth(10)">Oktober</a></li>-->
+<!--          <li><a (click)="getMonth(11)">November</a></li>-->
+<!--          <li><a (click)="getMonth(12)">Desember</a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <br>
+
+  <table  id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+
+    <thead>
+    <tr>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          No.
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Nomor Polis
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Nama Customer
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Produk
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526"ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Premi
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Status Klaim
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Status Polis
+        </a>
+      </td>
+      <td style="color: #EF8526" ng-class="selectedCls('date')" ng-click="changeSorting('date')">Tanggal Dimulai
+      </td>
+      <td style="color: #EF8526" ng-class="selectedCls('date')" ng-click="changeSorting('date')">Tanggal Kadaluarsa
+      </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr  *ngFor="let trans of newTransactions, index as i">
+      <td>{{i+1}}</td>
+      <td>
+        <p *ngIf="trans.trxpaId!=null">{{trans.trxpaId}}</p>
+        <p *ngIf="trans.trxparId!=null">{{trans.trxparId}}</p>
+        <p *ngIf="trans.id!=null">{{trans.id}}</p>
+      </td>
+      <td>
+        <p  *ngIf="trans.customerPA!=null">{{trans.customerPA.name}}</p>
+        <p  *ngIf="trans.customerPAR!=null">{{trans.customerPAR.name}}</p>
+        <p *ngIf="trans.customerTravel!=null">{{trans.customerTravel.name}}</p>
+      </td>
+      <td>
+        <p *ngIf="trans.customerPA!=null">{{trans.categoryPA.packagePA.name}}</p>
+        <p  *ngIf="trans.customerTravel!=null">{{trans.packageTravel.name}}</p>
+        <p *ngIf="trans.customerPAR!=null">{{trans.product.productName}}</p>
+      </td>
+      <td>
+        <p>{{trans.premi | commonCurrencyRp }}</p>
+      </td>
+      <td>
+        <p>{{trans.isClaim}}</p>
+      </td>
+      <td>
+        {{trans.statusPolis}}
+      </td>
+      <td>
+        {{trans.startDate | date: 'dd-MM-yyyy'}}
+      </td>
+      <td>{{trans.expDate | date: 'dd-MM-yyyy'}}</td>
+
+    </tr>
+    </tbody>
+
+  </table>
+</div>
+
+
+<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+<!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>-->
+<!--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->

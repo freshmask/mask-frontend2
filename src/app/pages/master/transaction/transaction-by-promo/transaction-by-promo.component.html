@@ -1,0 +1,205 @@
+<app-thesidebar></app-thesidebar>
+
+<div class="container-table bg-white">
+  <div class="container" ng-app="sortApp" ng-controller="mainController">
+    <div class="section-title mt-2" data-aos="zoom-out">
+      <h2>DAFTAR LIST TRANSAKSI</h2>
+    </div>
+    <h4 style="color: #EF8526; margin-top: -20px">Berdasarkan Status Promo</h4>
+    <div *ngIf="isLoading" class="text-center">
+      <img src="/assets/img/loadings.gif" alt="description of gif" />
+    </div>
+    <button style="background-color: #e67e22; float: right; margin-top: -20px" class="btn btn-info">
+      <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+      </a>
+    </button>
+
+    <div (click)="shortIsPromo()">
+      <span style="margin-left: 620px; color: #e67e22" class="fa fa-sort-amount-desc fa-fw mr-3"></span>
+      <span style="color: #EF8526"> Filter Status Promo </span>
+    </div>
+
+
+    <span *ngIf="!isStatusPromo">
+      <h5>Transaksi Promo</h5>
+    <div style="overflow-x:auto">
+      <table  id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+
+       <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Produk
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526"ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Premi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Klaim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Promo
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Kode Voucher
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let trans of loadedPosts; let i = index" ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{i+1}}</td>
+        <td>
+          <p *ngIf="trans.trxpaId!=null">{{trans.trxpaId}}</p>
+          <p *ngIf="trans.trxparId!=null">{{trans.trxparId}}</p>
+          <p *ngIf="trans.id!=null">{{trans.id}}</p>
+        </td>
+        <td>
+          <p  *ngIf="trans.customerPA!=null">{{trans.customerPA.name}}</p>
+          <p  *ngIf="trans.customerPAR!=null">{{trans.customerPAR.name}}</p>
+          <p *ngIf="trans.customerTravel!=null">{{trans.customerTravel.name}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.customerPA!=null">{{trans.categoryPA.packagePA.name}}</p>
+          <p  *ngIf="trans.customerTravel!=null">{{trans.packageTravel.name}}</p>
+          <p *ngIf="trans.customerPAR!=null">{{trans.product.productName}}</p>
+        </td>
+        <td>
+          <p>{{trans.premi | commonCurrencyRp}}</p>
+        </td>
+        <td>
+          <p>{{trans.isClaim}}</p>
+        </td>
+        <td>
+          {{trans.isPromo}}
+        </td>
+        <td>
+          <p  *ngIf="trans.customerPA!=null">{{trans.customerPA.voucherPA}}</p>
+          <p  *ngIf="trans.customerPAR!=null">{{trans.customerPAR.voucher}}</p>
+          <p *ngIf="trans.customerTravel!=null">{{trans.customerTravel.voucherTravel}}</p>
+        </td>
+
+      </tr>
+      </tbody>
+
+    </table>
+
+    </div>
+    </span>
+    <span *ngIf="isStatusPromo">
+      <h5>Transaksi Tidak Promo</h5>
+    <div style="overflow-x:auto">
+      <table class="table table-bordered table-striped" style="font-size: 14px">
+
+       <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+             Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Produk
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526"ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Premi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Klaim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Promo
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Kode Voucher
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let trans of transList; let i = index" ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{i+1}}</td>
+        <td>
+          <p *ngIf="trans.trxpaId!=null">{{trans.trxpaId}}</p>
+          <p *ngIf="trans.trxparId!=null">{{trans.trxparId}}</p>
+          <p *ngIf="trans.id!=null">{{trans.id}}</p>
+        </td>
+        <td>
+          <p  *ngIf="trans.customerPA!=null">{{trans.customerPA.name}}</p>
+          <p  *ngIf="trans.customerPAR!=null">{{trans.customerPAR.name}}</p>
+          <p *ngIf="trans.customerTravel!=null">{{trans.customerTravel.name}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.customerPA!=null">{{trans.categoryPA.packagePA.name}}</p>
+          <p  *ngIf="trans.customerTravel!=null">{{trans.packageTravel.name}}</p>
+          <p *ngIf="trans.customerPAR!=null">{{trans.product.productName}}</p>
+        </td>
+        <td>
+          <p>{{trans.premi| commonCurrencyRp}}</p>
+        </td>
+        <td>
+          <p>{{trans.isClaim}}</p>
+        </td>
+        <td>
+          {{trans.isPromo}}
+        </td>
+        <td>
+          <p  *ngIf="trans.customerPA!=null">{{trans.customerPA.voucherPA}}</p>
+          <p  *ngIf="trans.customerPAR!=null">{{trans.customerPAR.voucher}}</p>
+          <p *ngIf="trans.customerTravel!=null">{{trans.customerTravel.voucherTravel}}</p>
+        </td>
+
+      </tr>
+      </tbody>
+
+    </table>
+
+    </div>
+    </span>
+
+  </div>
+</div><!-- body-row END -->

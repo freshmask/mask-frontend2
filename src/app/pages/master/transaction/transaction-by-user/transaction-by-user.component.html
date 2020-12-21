@@ -1,0 +1,131 @@
+<app-thesidebar></app-thesidebar>
+
+<div class="container-table bg-white">
+  <div class="container" ng-app="sortApp" ng-controller="mainController">
+    <a routerLink="/admin/user"><img src="/assets/img/icon/arrow_org_s.png" alt="Arrow"></a>
+    <div class="section-title mt-2" data-aos="zoom-out">
+      <h2>DAFTAR LIST TRANSAKSI</h2>
+    </div>
+    <h4 style="color: #EF8526; margin-top: -20px">Berdasarkan User</h4>
+    <button style="background-color: #e67e22; float: right; margin-top: -20px" class="btn btn-info">
+      <a style="cursor: pointer;" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+      </a>
+    </button>
+
+    <p>{{transactionUser[0].users.name}}</p>
+
+    <div style="overflow-x:auto">
+
+      <table  id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+
+       <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Tanggal Transaksi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526"ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Klaim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            No. Identitas
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Foto Customer
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Foto Identitas
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+        <tbody>
+        <tr *ngFor="let trans of transactionUser; let i = index" ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+          <td>{{i+1}}</td>
+          <td>
+            <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.startDate  | date:'medium'}}</p>
+            <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.startDate  | date:'medium'}}</p>
+            <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.startDate  | date:'medium'}}</p>
+          </td>
+
+<!--          <td>{{trans.creationDate | date:'medium'}}</td>-->
+<!--          <td>{{trans.users.name}}</td>-->
+          <td>
+            <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.trxpaId}}</p>
+            <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.trxparId}}</p>
+            <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.id}}</p>
+          </td>
+          <td>
+            <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusPolis}}</p>
+            <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.statusPolis}}</p>
+            <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.statusPolis}}</p>
+          </td>
+          <td>
+            <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusClaim}}</p>
+            <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.statusClaim}}</p>
+            <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.statusClaim}}</p>
+          </td>
+          <td>
+            <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.customerPA.heirName}}</p>
+            <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.customerPAR.name}}</p>
+            <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.customerTravel.name}}</p>
+          </td>
+          <td>
+            <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.customerPA.identityNo}}</p>
+            <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.customerPAR.identityNo}}</p>
+            <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.customerTravel.identityNo}}</p>
+          </td>
+          <td>
+            <button *ngIf="trans.transactionPA!==null" class="btn btn-dark" (click)="downloadSwafotoPA(trans.transactionPA.customerPA.fileNamePhoto, trans.transactionPA.customerPA.heirName)">
+              <i class="fa fa-download" aria-hidden="true"></i> Unduh</button>
+            <button *ngIf="trans.transactionPAR!==null" class="btn btn-dark" [disabled]="true" (click)="downloadDocPAR(trans.transactionPAR.customerPAR.documentName , trans.transactionPAR.customerPAR.name)">
+              <i class="fa fa-download" aria-hidden="true"></i> Unduh</button>
+            <button *ngIf="trans.transactionTravel!==null"class="btn btn-dark" (click)="downloadSwafotoTravel(trans.transactionTravel.customerTravel.fileNamePhoto, trans.transactionTravel.customerTravel.name)">
+              <i class="fa fa-download" aria-hidden="true"></i> Unduh</button>
+          </td>
+          <td>
+            <button *ngIf="trans.transactionPA!==null" class="btn btn-dark" (click)="downloadFotoktpPA(trans.transactionPA.customerPA.fileNameIdentity, trans.transactionPA.customerPA.heirName)">
+              <i class="fa fa-download" aria-hidden="true"></i> Unduh</button>
+            <button *ngIf="trans.transactionPAR!==null" class="btn btn-dark" (click)="downloadDocPAR(trans.transactionPAR.customerPAR.documentName, trans.transactionPAR.customerPAR.name)">
+              <i class="fa fa-download" aria-hidden="true"></i> Unduh</button>
+            <button *ngIf="trans.transactionTravel!==null"class="btn btn-dark" (click)="downloadFotoktpTravel(trans.transactionTravel.customerTravel.fileNameIdentity, trans.transactionTravel.customerTravel.name)">
+              <i class="fa fa-download" aria-hidden="true"></i> Unduh</button>
+          </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    </div>
+
+  </div>
+</div><!-- body-row END -->

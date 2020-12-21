@@ -1,0 +1,64 @@
+<app-thesidebar></app-thesidebar>
+<!-- MAIN -->
+
+
+<div class="container-fluid bg-white">
+  <div class="col p-4">
+    <div class="section-title" data-aos="zoom-out">
+      <h2>ASKRINDO</h2>
+      <h4>Dashboard Admin</h4>
+    </div>
+    <div class="card">
+      <div class="row mb-5">
+        <div class="col-4" >
+          <div class="container" (click)="toListUser()">
+            <h5 style="margin-bottom: -20px"><i class="fa fa-user"></i> Pengguna Mobile Terdaftar</h5>
+            <p>{{numberUser}}</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="container" (click)="toListTrans()">
+            <h5 style="margin-bottom: -20px"><i class="fa fa-cart-plus"></i> Jumlah Transaksi</h5>
+            <p>{{sumAllTrans}}</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="container" (click)="toListClaim()">
+            <h5  style="margin-bottom: -20px"><i class="fa fa-credit-card"></i> Jumlah Klaim</h5>
+            <p>{{sumAllClaim}}</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-4">
+          <div id="divChart3">
+            <h4>Data Penjualan Per Produk</h4>
+            <canvas id="barChart"
+                    width="300" height="400"></canvas>
+          </div>
+        </div>
+        <div class="col-4">
+          <div id="divChart">
+            <h4 style="text-align: center">Prosentase Penjualan Produk</h4>
+            <canvas id="productChart"
+                    width="600" height="400"></canvas>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div id="divChart2">
+            <h4 style="text-align: center">Prosentase Klaim Per Produk</h4>
+            <canvas id="claimChart"
+                    width="600" height="400"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- Main Col END -->
+</div>

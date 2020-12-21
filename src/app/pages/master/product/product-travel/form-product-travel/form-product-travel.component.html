@@ -1,0 +1,95 @@
+<app-thesidebar></app-thesidebar>
+
+  <div class="container bg-white" >
+    <a routerLink="/admin/product/all"><img src="/assets/img/icon/arrow_org_s.png" alt="Arrow"></a>
+    <div class="section-title mt-2" data-aos="zoom-out">
+      <h2>FORM</h2>
+      <h5>Paket Asuransi Perjalanan</h5>
+    </div>
+    <div class="container-fluid" style="padding: 15px">
+      <form style="padding: 10px" [formGroup]="packageTaForm" method="post" (ngSubmit)="ngSubmit(packageTaForm.value, packageTaForm.valid)">
+        <div class="Form-group">
+          <input type="hidden" class="form-control" formControlName="ptId" id="id">
+          <label for="name">
+            Nama Paket  {{form('name').errors?.required ? '*' : ''}}</label>
+          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nama Paket">
+          <small class="form-text text-danger "
+                 *ngIf="form('name').invalid && form('name').dirty || form('name').touched">
+            <div *ngIf="form('name').errors?.required">
+              Bagian ini harus terisi
+            </div>
+            <div  *ngIf="form('name').errors?.maxlength">
+              Nama Paket maksimum 50 karakter
+            </div>
+          </small>
+        </div>
+
+        <div class="Form-group">
+          <label for="days">Jangka Waktu Hari{{form('days').errors?.required ? '*' : ''}}</label>
+          <input type="text" class="form-control" formControlName="days" id="days" placeholder="Hari">
+          <small class="form-text text-danger"
+                 *ngIf="form('days').invalid && form('days').dirty || form('days').touched">
+            <div *ngIf="form('days').errors?.required">
+              Bagian ini harus terisi
+            </div>
+            <div *ngIf="form('days').errors?.pattern">
+              Harus menggunakan angka dan tidak boleh 0
+            </div>
+          </small>
+        </div>
+
+        <div class="Form-group">
+          <label for="price">Harga{{form('price').errors?.required ? '*' : ''}}</label>
+          <input type="text" class="form-control" formControlName="price" id="price" placeholder="Harga">
+          <small class="form-text text-danger "
+                 *ngIf="form('price').invalid && form('price').dirty || form('price').touched">
+            <div *ngIf="form('price').errors?.required">
+              Bagian ini harus terisi
+            </div>
+            <div *ngIf="form('price').errors?.pattern">
+              Harus menggunakan angka dan tidak boleh 0
+            </div>
+          </small>
+        </div>
+
+        <div class="Form-group">
+          <label for="pricePromo">Harga Promo</label>
+          <input type="text" class="form-control" formControlName="pricePromo" id="pricePromo"
+                 placeholder="Harga Promo">
+          <small class="form-text text-danger "
+                 *ngIf="form('pricePromo').invalid && form('pricePromo').dirty || form('pricePromo').touched">
+            <div style="font-weight: bold;" *ngIf="form('pricePromo').errors?.pattern">
+              Harus menggunakan angka
+            </div>
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="voucher">Voucher</label>
+          <input type="text" class="form-control" formControlName="voucher" id="voucher" placeholder="Voucher">
+        </div>
+
+<!--        <div class="form-group">-->
+<!--          <label for="product"> Product</label>-->
+<!--          <select formControlName="product" id="product">-->
+<!--            <option>-->
+<!--              Asuransi-->
+<!--            </option>-->
+<!--          </select>-->
+<!--          <div *ngIf="form('product').invalid && (form('product').dirty || form('product').touched)"-->
+<!--               class="form-text text-danger">-->
+<!--            <div *ngIf="form('product').errors?.required">-->
+<!--              Bagian ini harus diisi-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="form-group">
+          <input type="hidden" class="form-control" formControlName="product" id="product">
+          <input type="hidden" class="form-control" formControlName="isActive" id="isActive">
+        </div>
+
+
+        <button [disabled]="!packageTaForm.valid" type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>

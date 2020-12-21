@@ -1,0 +1,161 @@
+<app-thesidebar></app-thesidebar>
+  <!-- MAIN -->
+  <div class="container">
+    <a routerLink="/admin/product/all"><img src="/assets/img/icon/arrow_org_s.png" alt="Arrow"></a>
+    <div class="section-title mt-2" data-aos="zoom-out">
+      <h2>ASKRINDO</h2>
+      <h5>Asuransi Properti/ Harta Benda</h5>
+    </div>
+    <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-2 mt-4">
+      <div class="inforide">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-4 rideone">
+<!--            <img src="https://vignette.wikia.nocookie.net/nationstates/images/2/29/WS_Logo.png/revision/latest?cb=20080507063620">-->
+          </div>
+          <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+            <h4>Mesin</h4>
+<!--            <h2>20</h2>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-2 mt-4">
+      <div class="inforide">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-4 ridetwo">
+<!--            <img src="https://vignette.wikia.nocookie.net/nationstates/images/2/29/WS_Logo.png/revision/latest?cb=20080507063620">-->
+          </div>
+          <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+            <h4>Bangunan</h4>
+<!--            <h2>120</h2>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-2 mt-4">
+      <div class="inforide">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-4 ridethree">
+<!--            <img src="https://vignette.wikia.nocookie.net/nationstates/images/2/29/WS_Logo.png/revision/latest?cb=20080507063620">-->
+          </div>
+          <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+            <h4>Perabotan</h4>
+<!--            <h2>50</h2>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="container-table bg-white mt-3">
+      <h4  style="color: #EF8526; margin-left: 10px">Daftar Okupasi</h4>
+      <div style="overflow-x:auto">
+        <table class="table table-bordered table-striped">
+
+          <thead>
+          <tr>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Kode
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Keterangan
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Rate 1
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+                Rate 2
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526"ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+                Rate 3
+              </a>
+            </td>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr
+              ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+            <td class="hidden-xs">2976</td>
+            <td> Rumah tinggal tidak di peruntukan untuk usaha dan tidak melebihi 3 tingkat</td>
+            <td>0,294</td>
+            <td>0,397</td>
+            <td>0,499</td>
+          </tr>
+          <tr
+            ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+            <td class="hidden-xs">29761</td>
+            <td>Rumah tinggal untuk usaha kost</td>
+            <td>0,478</td>
+            <td>0,645</td>
+            <td>0,812</td>
+          </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+    <div class="container-table bg-white mt-3">
+      <h4 style="color: #EF8526; margin-left: 10px">Kelas Konstruksi</h4>
+      <div style="overflow-x:auto">
+        <table class="table table-bordered table-striped">
+
+          <thead>
+          <tr>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Kelas
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Keterangan
+              </a>
+            </td>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr
+            ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+            <td class="hidden-xs">1</td>
+            <td>Bangunan dikatakan berkonstruksi kelas 1 (satu) apabila dinding, lantai, dan semua komponen penunjang strukturalnya serta penutup atap terbuat seluruhnya dan sepenuhnya dari bahan yang tidak mudah terbakar. Jendela dan/atau pintu beserta kerangkanya, dinding partisi, dan penutup lantai boleh diabaikan
+              Screen reader support enabled.
+            </td>
+          </tr>
+          <tr
+            ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+            <td class="hidden-xs">2</td>
+            <td>Bangunan dikatakan berkonstruksi kelas 2 (dua) adalah bangunan yang kriterianya sama seperti apa yang disebutkan dalam bangunan berkonstruksi kelas 1 (satu), dengan kelonggaran penutup atap boleh terbuat dari sirap kayu keras, dinding boleh mengandung bahan yang dapat terbakar sampai maksimum 20% (dua puluh persen) dari luas dinding, serta lantai dan struktur penunjangnya boleh terbuat dari kayu
+              Screen reader support enabled.
+            </td>
+          </tr>
+          <tr
+            ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+            <td class="hidden-xs">3</td>
+            <td>
+              Semua bangunan selain yang disebutkan pada kelas konstruksi 1 (satu) dan konstruksi 2 (dua)
+            </td>
+          </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div><!-- Main Col END -->

@@ -1,0 +1,75 @@
+<app-thesidebar></app-thesidebar>
+<div class="container">
+  <a routerLink="/admin/dashboard"><img src="/assets/img/icon/arrow_org_s.png" alt="Arrow"></a>
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center mb-3">
+              <a href="https://ibb.co/8shymfK"><img src="https://i.ibb.co/JthYcGB/logoMask.png" alt="Admin" class="rounded-circle" width="150" border="0"></a>
+               <div class="mt-3">
+                <h4>{{name}}</h4>
+                <p class="text-secondary mb-1">{{email}}</p>
+<!--                <button class="btn btn-primary">Follow</button>-->
+                <button (click)="OnChangePassword()" class="btn btn-outline-warning">Ubah Password</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Nama Lengkap</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{name}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">No. Identitas </h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{idCardNo}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Nomor Telepon</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{phoneNumber}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Tanggal Lahir</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{birthdate}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Jenis Kelamin</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{gender}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

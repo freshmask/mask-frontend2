@@ -1,0 +1,205 @@
+<app-thesidebar></app-thesidebar>
+<div class="container-table bg-white">
+  <div class="section-title" data-aos="zoom-out">
+    <h2>DAFTAR</h2>
+    <h5>List User</h5>
+  </div>
+  <div *ngIf="isLoading" class="text-center">
+    <img src="/assets/img/loadings.gif" alt="description of gif" />
+  </div>
+  <div class="container" ng-app="sortApp" ng-controller="mainController">
+    <div>
+<!--    <button style="font-size: 15px; background-color: red;  color: white;   float: right; margin-bottom: 10px"-->
+<!--            (click)="sendRenewalNotif()"-->
+<!--            type="button" class="btn"><i class="fa fa-info" aria-hidden="true"></i> Ingatkan Customer-->
+<!--    </button>-->
+      <button style="background-color: #e67e22; float: right; margin-bottom: 20px; color: white; margin-right: 5px" class="btn btn-custom">
+        <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+        </a>
+      </button>
+    </div>
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <input [(ngModel)]="searchByName" name="searchByName" (keyup)="searchLive()" type="search"
+                 class="form-control"
+                 placeholder="Cari berdasarkan nama">
+        </div>
+      </div>
+    </form>
+    <span *ngIf="isSearch">
+    <div style="overflow-x:auto">
+      <table class="table table-bordered table-striped" style="font-size: 14px">
+
+      <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama
+            <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Email
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Tanggal Lahir
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Jenis Kelamin
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            No. Hp
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Aktivasi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+            Aksi
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let user of userList; let i = index"
+          ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td class="hidden-xs">{{i + 1}}</td>
+        <td style="width: 30vh">{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.birthdate | date:'dd-MM-yyyy'}}</td>
+        <td>{{user.gender}}</td>
+        <td>{{user.phoneNumber}}</td>
+        <td style="width: 25vh">{{user.isActive}}
+          <button  style="font-size: 12px; margin-left: 5px; background-color: #EF8526; color: white "
+                   type="button" class="btn" (click)="onStatusChange(user.id)"><i class="icofont-exchange"></i>
+                    Ubah
+          </button></td>
+        <td>
+          <div class="row">
+          <button style="font-size: 12px; background-color: #EF8526;  color: white; margin-left: 20px; margin-right: 20px"
+                  (click)="getDetailUserTrans(user.id)"
+                  type="button" class="btn">
+            Detail
+          </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+
+    </div>
+    </span>
+    <span *ngIf="!isSearch">
+    <div style="overflow-x:auto">
+    <table id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+
+      <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama
+            <!--            <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>-->
+            <!--            <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>-->
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Email
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Tanggal Lahir
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Jenis Kelamin
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            No. Hp
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Aktivasi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+            Aksi
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr
+        *ngFor="let user of loadedPosts | paginate: { itemsPerPage: size, currentPage: page, totalItems: totalItems }; let i = index"
+        ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td class="hidden-xs">{{i + 1}}</td>
+        <td style="width: 30vh">{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.birthdate | date:'dd-MM-yyyy'}}</td>
+        <td>{{user.gender}}</td>
+        <td>{{user.phoneNumber}}</td>
+        <td style="width: 25vh">{{user.isActive}}
+          <button *ngIf="user.isActive==='false'"  style="font-size: 12px; margin-left: 5px; color: white "
+                   type="button" class="btn btn-danger" (click)="onStatusChange(user.id)"><i class="icofont-exchange"></i>
+                    Ubah
+          </button>
+          <button *ngIf="user.isActive==='true'"  style="font-size: 12px; margin-left: 10px; color: white; "
+                  type="button" class="btn btn-success" (click)="onStatusChange(user.id)"><i class="icofont-exchange"></i>
+                    Ubah
+          </button>
+        </td>
+        <td>
+          <div class="row">
+
+          <button style="font-size: 12px; background-color: #EF8526;  color: white; margin-left: 20px; margin-right: 20px "
+                  (click)="getDetailUserTrans(user.id)"
+                  type="button" class="btn"><i class="fa fa-info" aria-hidden="true"></i> Detail
+          </button>
+
+          </div>
+
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+    </div>
+        <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"></pagination-controls>
+    </span>
+
+  </div>
+</div><!-- body-row END -->
+
+

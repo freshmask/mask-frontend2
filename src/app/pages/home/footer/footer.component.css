@@ -1,0 +1,81 @@
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  background: #EF8526;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 0;
+}
+
+#footer h3 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+#footer p {
+  font-size: 15;
+  font-style: italic;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+#footer .social-links {
+  margin: 0 0 40px 0;
+}
+
+#footer .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #ef6603;
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+
+  vertical-align: -0.125em;
+}
+
+#footer .social-links a:hover {
+  background: #bd5102;
+  color: #fff;
+  text-decoration: none;
+}
+#footer .social-links .twitter{
+  content: url('https://api.iconify.design/bx-bxl-twitter.svg?height=24');
+}
+#footer .social-links .facebook{
+  content: url('https://api.iconify.design/ant-design:facebook-filled.svg?height=16');
+  vertical-align: -0.125em;
+}
+#footer .social-links .instagram{
+  content: url('https://api.iconify.design/logos:instagram-icon.svg?height=16');
+  vertical-align: -0.125em;
+}
+#footer .social-links .youtube{
+  content: url('https://api.iconify.design/ant-design:youtube-outlined.svg?height=16');
+  vertical-align: -0.125em;
+}
+#footer .social-links .linkedin{
+  content: url('https://api.iconify.design/ei:sc-linkedin.svg?height=16');
+  vertical-align: -0.125em;
+}
+#footer .copyright {
+  margin: 0 0 5px 0;
+}
+
+#footer .credits {
+  font-size: 13px;
+}

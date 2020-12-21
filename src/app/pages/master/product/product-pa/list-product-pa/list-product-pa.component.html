@@ -1,0 +1,115 @@
+<app-thesidebar></app-thesidebar>
+<div class="container-pa bg-white">
+  <div class="container-table bg-white">
+    <a routerLink="/admin/product/all"><img src="/assets/img/icon/arrow_org_s.png" alt="Arrow"></a>
+
+    <div style="padding: 20px;" class="container" ng-app="sortApp" ng-controller="mainController">
+      <div class="section-title mt-6" data-aos="zoom-out">
+        <h2>DETAIL</h2>
+        <h5>Produk Asuransi Kecelakaan Diri</h5>
+      </div>
+
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+      <div class="container bootstrap snippets bootdey" style="margin-bottom: 50px">
+        <div class="row margin-bottom-5">
+          <div *ngFor="let packagePA of packagePA; index as i" class="col-md-4 col-sm-6">
+            <div class="servive-block">
+              <h3 class="heading-md">{{packagePA.name}}</h3>
+              <p>Santunan Maksimal {{packagePA.compensation | commonCurrencyRp}}</p>
+              <button  class="btn btn-dark"
+                      (click)="onGetCategoryPA(packagePA.paId)">Detail
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+        <button [disabled]="tempId == null" style="background-color: #e67e22; float: right; margin-top: -45px;" class="btn btn-info">
+          <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+          </a>
+        </button>
+
+      <div>
+        <h4 style="color: #EF8526; font-size: 30px; margin-left: 5px"
+            *ngIf="tempId==packagePA[0].paId">{{packagePA[0].name}}</h4>
+        <h4 style="color: #EF8526; font-size: 30px; margin-left: 5px"
+            *ngIf="tempId==packagePA[1].paId">{{packagePA[1].name}}</h4>
+        <h4 style="color: #EF8526; font-size: 30px; margin-left: 5px"
+            *ngIf="tempId==packagePA[2].paId">{{packagePA[2].name}}</h4>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table  id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+          <thead>
+          <tr>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Kategori Hari
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Harga
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Harga Promo
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Voucher
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Status
+              </a>
+            </td>
+            <td>
+              <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+                Aksi
+              </a>
+            </td>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish"
+              *ngFor="let category of categoryPA">
+            <td>{{category.days}} hari</td>
+            <td>{{category.price | commonCurrencyRp}}</td>
+            <td>{{category.pricePromo | commonCurrencyRp}}</td>
+            <td>{{category.voucher}}</td>
+            <td>{{category.isActive}}</td>
+            <td style="align-content: center">
+              <button *ngIf="category.isActive==='false'" style="font-size: 12px; margin-left: 5px; color: white "
+                      type="button" class="btn btn-danger" (click)="onChangeStatus(category.categoryId)"><i
+                class="icofont-exchange"></i>
+                Ubah
+              </button>
+              <button *ngIf="category.isActive==='true'" style="font-size: 12px; margin-left: 5px; color: white "
+                      type="button" class="btn btn-success" (click)="onChangeStatus(category.categoryId)"><i
+                class="icofont-exchange"></i>
+                Ubah
+              </button>
+
+              <button style="font-size: 12px; background-color: #EF8526;  color: white; margin-left: 5px"
+                      type="button" class="btn" (click)="editPackage(category)"><i class="icofont-info-circle"></i>
+                Perbaharui
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <button [disabled]="tempId == null" routerLink="/admin/product/pa/form"
+                style="font-size: 15px; background-color: #EF8526;  color: white" type="button" class="btn"><i class="icofont-ui-add"></i>
+          Tambah Kategori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

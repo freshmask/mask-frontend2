@@ -1,0 +1,237 @@
+<app-thesidebar></app-thesidebar>
+
+<div style="padding: 20px;" class="container bg-white" ng-app="sortApp" ng-controller="mainController">
+  <div class="section-title mt-2" data-aos="zoom-out">
+    <h2>KLAIM</h2>
+    <h5>Asuransi Perjalanan</h5>
+  </div>
+  <div *ngIf="isLoading" class="text-center">
+    <img src="/assets/img/loadings.gif" alt="description of gif" />
+  </div>
+
+  <button style="background-color: #e67e22; float: right; margin-bottom: 20px" class="btn btn-info">
+    <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+    </a>
+  </button>
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input [(ngModel)]="searchByName" name="searchByName" type="text" class="form-control"
+               placeholder="Cari berdasarkan nomor polis" (keyup)="searchLive()">
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive" *ngIf="!isSearch">
+    <!--Table-->
+    <table  id="excel-table" class="table table-striped" style="font-size: 14px">
+
+      <!--Table head-->
+      <thead>
+      <tr style="text-align: center; color: #EF8526">
+        <th>No.</th>
+        <th>Nomor Polis</th>
+        <th>Nama Pengguna</th>
+        <th>Nama Customer</th>
+        <th>Tanggal Pelaporan</th>
+        <th>Tanggal Kejadian</th>
+        <th>Penyebab Kerugian</th>
+        <th>Lokasi Kerugian</th>
+        <th>Claim Submission</th>
+        <th>Claim Approval</th>
+        <th>Status Klaim</th>
+        <th>Surat Kematian</th>
+        <th>Surat Keterangan Dokter</th>
+        <th>Rincian Biaya Pengobatan</th>
+        <th>Tindakan</th>
+      </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+      <tr *ngFor="let claimTravel of loadedPosts | paginate: { itemsPerPage: size, currentPage: page, totalItems: totalItems }, index as i">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{claimTravel.transaction.transactionTravel.id}}</td>
+        <td>{{claimTravel.name}}</td>
+        <td>{{claimTravel.transaction.transactionTravel.customerTravel.name}}</td>
+        <td>{{claimTravel.reportDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{claimTravel.incidentDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{claimTravel.lossCause}}</td>
+        <td>{{claimTravel.incidentLocation}}</td>
+        <td>{{claimTravel.claimSubmission | commonCurrencyRp}}</td>
+        <td>{{claimTravel.claimApproval | commonCurrencyRp}}</td>
+        <td>{{claimTravel.transaction.transactionTravel.statusClaim}}</td>
+        <td>
+          <button class="btn btn-dark" (click)="downloadDeathCertTravel(claimTravel.deathCertificate)">
+            <i class="fa fa-download" aria-hidden="true"></i> Unduh
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-dark" (click)="downloadMedCertTravel(claimTravel.medicalCertificate)">
+            <i class="fa fa-download" aria-hidden="true"></i> Unduh
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-dark" (click)="downloadMedExpTravel(claimTravel.medicalExpenses)">
+            <i class="fa fa-download" aria-hidden="true"></i> Unduh
+          </button>
+        </td>
+        <td>
+          <div class="row justify-content-center">
+            <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
+                    (click)="onSendClaimTravel(claimTravel)"
+                    [disabled]="claimTravel.transaction.transactionTravel.statusClaim==='disetujui' ||
+                    claimTravel.transaction.transactionTravel.statusClaim==='ditolak'">
+              <i class="fa fa-check-square-o" aria-hidden="true"></i>
+            </button>&nbsp;
+            <button class="btn btn-danger" (click)="rejectedClaimTravel(claimTravel.id)"
+                    [disabled]="claimTravel.transaction.transactionTravel.statusClaim==='ditolak' ||
+                    claimTravel.transaction.transactionTravel.statusClaim==='disetujui'">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+            <div *ngIf="isLoading && claimTravel.transaction.transactionTravel.statusClaim==='Proses Persetujuan'" class="text-center">
+              <img src="/assets/img/loadings.gif" alt="description of gif" />
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+      <!--Table body-->
+    </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Masukkan Jumlah Persetujuan Klaim</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Jumlah persetujuan klaim</label>&nbsp;
+            <input type="text" placeholder="Rp. " [(ngModel)]="valueClaim">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onApproved(valueClaim)">Simpan Persetujuan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"></pagination-controls>
+
+    <!--Table-->
+  </div>
+
+
+  <div class="table-responsive" *ngIf="isSearch">
+    <!--Table-->
+    <table class="table table-striped" style="font-size: 14px">
+
+      <!--Table head-->
+      <thead>
+      <tr style="text-align: center; color: #EF8526">
+        <th>No.</th>
+        <th>Nomor Polis</th>
+        <th>Nama Pengguna</th>
+        <th>Nama Customer</th>
+        <th>Tanggal Pelaporan</th>
+        <th>Tanggal Kejadian</th>
+        <th>Penyebab Kerugian</th>
+        <th>Lokasi Kerugian</th>
+        <th>Claim Submission</th>
+        <th>Claim Approval</th>
+        <th>Status Klaim</th>
+        <th>Surat Kematian</th>
+        <th>Surat Keterangan Dokter</th>
+        <th>Rincian Biaya Pengobatan</th>
+        <th>Tindakan</th>
+      </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+      <tr *ngFor="let claimTravel of newData, index as i">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{claimTravel.transaction.transactionTravel.id}}</td>
+        <td>{{claimTravel.name}}</td>
+        <td>{{claimTravel.transaction.transactionTravel.customerTravel.name}}</td>
+        <td>{{claimTravel.reportDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{claimTravel.incidentDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{claimTravel.lossCause}}</td>
+        <td>{{claimTravel.incidentLocation}}</td>
+        <td>{{claimTravel.claimSubmission | commonCurrencyRp}}</td>
+        <td>{{claimTravel.claimApproval | commonCurrencyRp}}</td>
+        <td>{{claimTravel.transaction.transactionTravel.statusClaim}}</td>
+        <td>
+          <button class="btn btn-dark" (click)="downloadDeathCertTravel(claimTravel.deathCertificate)">
+            <i class="fa fa-download" aria-hidden="true"></i> Unduh
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-dark" (click)="downloadMedCertTravel(claimTravel.medicalCertificate)">
+            <i class="fa fa-download" aria-hidden="true"></i> Unduh
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-dark" (click)="downloadMedExpTravel(claimTravel.medicalExpenses)">
+            <i class="fa fa-download" aria-hidden="true"></i> Unduh
+          </button>
+        </td>
+        <td>
+          <div class="row justify-content-center">
+            <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal1"
+                    (click)="onSendClaimTravel(claimTravel)"
+                    [disabled]="claimTravel.transaction.transactionTravel.statusClaim==='disetujui' ||
+                    claimTravel.transaction.transactionTravel.statusClaim==='ditolak'">
+              <i class="fa fa-check-square-o" aria-hidden="true"></i>
+            </button>&nbsp;
+            <button class="btn btn-danger" (click)="rejectedClaimTravel(claimTravel.id)"
+                    [disabled]="claimTravel.transaction.transactionTravel.statusClaim==='ditolak' ||
+                    claimTravel.transaction.transactionTravel.statusClaim==='disetujui'">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+            <div *ngIf="isLoading && claimTravel.transaction.transactionTravel.statusClaim==='Proses Persetujuan'" class="text-center">
+              <img src="/assets/img/loadings.gif" alt="description of gif" />
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+      <!--Table body-->
+    </table>
+
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Masukkan Jumlah Persetujuan Klaim</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Jumlah persetujuan klaim</label>&nbsp;
+            <input type="text" placeholder="Rp. " [(ngModel)]="valueClaim">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onApproved(valueClaim)">Simpan Persetujuan</button>
+            <div *ngIf="isLoading" class="text-center">
+              <img src="/assets/img/spinner.gif" alt="description of gif" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Table-->
+  </div>
+  <!--Section: Live preview-->
+</div>

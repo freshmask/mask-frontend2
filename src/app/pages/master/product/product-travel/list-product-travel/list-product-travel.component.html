@@ -1,0 +1,200 @@
+<app-thesidebar></app-thesidebar>
+<div class="container-ta bg-white">
+  <div class="container-table bg-white">
+    <div class="container" ng-app="sortApp" ng-controller="mainController">
+      <a routerLink="/admin/product/all"><img src="/assets/img/icon/arrow_org_s.png" alt="Arrow"></a>
+      <div class="section-title mt-2" data-aos="zoom-out">
+        <h2>DAFTAR</h2>
+        <h5>Paket Produk Asuransi Perjalanan</h5>
+      </div>
+      <div *ngIf="isLoading" class="text-center">
+        <img src="/assets/img/loadings.gif" alt="description of gif"/>
+      </div>
+      <button style="background-color: #e67e22; float: right; margin-bottom: 20px" class="btn btn-info">
+        <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+        </a>
+      </button>
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input [(ngModel)]="searchByName" name="searchByName" (keyup)="searchLive()" type="search"
+                   class="form-control"
+                   placeholder="Cari dengan nama">
+            <span *ngIf="isSearch"></span>
+          </div>
+        </div>
+      </form>
+      <span *ngIf="isSearch">
+  <div style="overflow-x:auto">
+  <table class="table table-bordered table-striped">
+
+    <thead>
+    <tr>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          No.
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Nama
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Jangka Waktu
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Harga
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Harga Promo
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Voucher
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+          Status
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+          Aksi
+          <!--          <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>-->
+          <!--          <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>-->
+        </a>
+      </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let package of packageList; let i = index"
+        ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+      <td>{{i + 1}}</td>
+      <td>{{package.name}}</td>
+      <td>{{package.days}} hari</td>
+      <td>{{package.price | commonCurrencyRp}}</td>
+      <td>{{package.pricePromo | commonCurrencyRp}}</td>
+      <td>{{package.voucher}}</td>
+      <td>{{package.isActive}}</td>
+      <td>
+           <button *ngIf="package.isActive==='false'" style="font-size: 12px; margin-left: 5px; color: white "
+                   type="button" class="btn btn-danger" (click)="onChangeStatus(package.ptId)"><i
+             class="icofont-exchange"></i>
+                    Ubah
+          </button>
+          <button *ngIf="package.isActive==='true'" style="font-size: 12px; margin-left: 5px; color: white "
+                  type="button" class="btn btn-success" (click)="onChangeStatus(package.ptId)"><i
+            class="icofont-exchange"></i>
+                    Ubah
+          </button>
+        <button style="font-size: 12px; background-color: #EF8526;  color: white" (click)="editPackage(package)"
+                type="button" class="btn">
+          perbarui
+        </button>
+      </td>
+    </tr>
+
+    </tbody>
+
+  </table>
+  </div>
+  </span>
+      <span *ngIf="!isSearch">
+  <div style="overflow-x:auto">
+  <table  id="excel-table" class="table table-bordered table-striped">
+
+    <thead>
+    <tr>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          No.
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Nama
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Jangka Waktu
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Harga
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Harga Promo
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Voucher
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Status
+        </a>
+      </td>
+      <td>
+        <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+          Aksi
+        </a>
+      </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let package of loadedData; let i = index"
+        ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+      <td>{{i + 1}}</td>
+      <td>{{package.name}}</td>
+      <td>{{package.days}} hari</td>
+      <td>{{package.price | commonCurrencyRp}}</td>
+      <td>{{package.pricePromo | commonCurrencyRp}}</td>
+      <td>{{package.voucher}}</td>
+      <td>{{package.isActive}}</td>
+      <td>
+         <button *ngIf="package.isActive==='false'" style="font-size: 12px; margin-right: 5px; color: white "
+                 type="button" class="btn btn-danger" (click)="onChangeStatus(package.ptId)"><i
+           class="icofont-exchange"></i>
+                    Ubah
+          </button>
+          <button *ngIf="package.isActive==='true'" style="font-size: 12px; margin-right: 5px; color: white "
+                  type="button" class="btn btn-success" (click)="onChangeStatus(package.ptId)"><i
+            class="icofont-exchange"></i>
+                    Ubah
+          </button>
+        <button style="font-size: 12px; background-color: #EF8526;  color: white" (click)="editPackage(package)"
+                type="button" class="btn"><i class="icofont-info-circle"></i>
+          perbarui
+        </button>
+      </td>
+    </tr>
+
+    </tbody>
+
+  </table>
+  </div>
+  </span>
+      <button routerLink="/admin/product/travel/form"
+              style="font-size: 15px; background-color: #EF8526;  color: white" type="button" class="btn"><i class="icofont-ui-add"></i>
+        Tambah Paket
+      </button>
+    </div>
+  </div>
+</div>

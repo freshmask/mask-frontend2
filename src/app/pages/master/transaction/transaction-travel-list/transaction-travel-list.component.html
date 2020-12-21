@@ -1,0 +1,188 @@
+<app-thesidebar></app-thesidebar>
+  <div class="container-table bg-white">
+    <div class="section-title mt-2" data-aos="zoom-out">
+      <h2>DAFTAR LIST TRANSAKSI</h2>
+    </div>
+    <h4 style="color: #EF8526; margin-top: -20px">Berdasarkan Produk Asuransi Perjalanan</h4>
+    <div *ngIf="isLoading" class="text-center">
+      <img src="/assets/img/loadings.gif" alt="description of gif" />
+    </div>
+    <button style="background-color: #e67e22; float: right; margin-bottom: 20px" class="btn btn-info">
+      <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
+      </a>
+    </button>
+
+    <div class="container" ng-app="sortApp" ng-controller="mainController">
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input [(ngModel)]="searchByName" name="searchByName" (keyup)="searchLive()" type="search" class="form-control"
+                   placeholder="Cari berdasarkan nomor polis">
+          </div>
+        </div>
+      </form>
+      <span *ngIf="isSearch">
+    <div style="overflow-x:auto">
+      <table class="table table-bordered table-striped" style="font-size: 14px">
+
+      <thead>
+       <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Tanggal Mulai
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Tanggal Kadaluarsa
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Pembayaran
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Premi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+            Status Claim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+            Paket Travel
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr
+        *ngFor="let trans of transactionList | paginate: { itemsPerPage: size, currentPage: page, totalItems: totalItems }; let i = index"
+        ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td class="hidden-xs">{{i + 1}}</td>
+         <td>{{trans.id}}</td>
+        <td>{{trans.customerTravel.name}}</td>
+        <td>{{trans.startDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{trans.expDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{trans.isPayment}}</td>
+        <td>{{trans.premi | commonCurrencyRp}}</td>
+        <td>{{trans.statusPolis}}</td>
+        <td>{{trans.statusClaim}}</td>
+        <td>{{trans.packageTravel.name}}</td>
+      </tr>
+      </tbody>
+
+    </table>
+
+    </div>
+    </span>
+      <span *ngIf="!isSearch">
+    <div style="overflow-x:auto">
+    <table  id="excel-table" class="table table-bordered table-striped" style="font-size: 14px">
+
+      <thead>
+      <tr>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            No.
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nomor Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Nama Customer
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Tanggal Mulai
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Tanggal Kadaluarsa
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Pembayaran
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Premi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+            Status Polis
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+            Status Claim
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+            Paket Travel
+          </a>
+        </td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr
+        *ngFor="let trans of loadedPosts | paginate: { itemsPerPage: size, currentPage: page, totalItems: totalItems }; let i = index"
+        ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td class="hidden-xs">{{i + 1}}</td>
+         <td>{{trans.id}}</td>
+        <td>{{trans.customerTravel.name}}</td>
+        <td>{{trans.startDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{trans.expDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{trans.isPayment}}</td>
+        <td>{{trans.premi | commonCurrencyRp}}</td>
+        <td>{{trans.statusPolis}}</td>
+        <td>{{trans.statusClaim}}</td>
+        <td>{{trans.packageTravel.name}}</td>
+      </tr>
+      </tbody>
+
+    </table>
+    </div>
+        <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"></pagination-controls>
+    </span>
+
+
+    </div>
+  </div><!-- body-row END -->

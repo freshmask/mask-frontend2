@@ -1,0 +1,176 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<div class="body">
+<div class="container register">
+  <div class="row">
+    <div class="col-md-9 register-right">
+      <div class="tab-content" id="myTabContent">
+
+
+        <form [formGroup]="registerForm" method="post" (ngSubmit)="addUser(registerForm.value)">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <h3 class="register-heading">Pendaftaran Admin</h3>
+            <div class="row register-form" [formGroup]="registerForm" method="post" (ngSubmit)="addUser(registerForm.value)">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Nama</label>
+                  <input type="text" formControlName="name" class="form-control" placeholder="Nama *"/>
+                  <div class="row ml-2">
+                    <small *ngIf="form('name').invalid && (form('name').dirty || (form('name').touched))"
+                           class="text text-danger float-left">
+                      <div *ngIf="form('name').errors?.required">
+                        Nama harus di isi
+                      </div>
+                      <div  *ngIf="form('name').errors?.maxlength">
+                        Nama maksimum 50 karakter
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" formControlName="email" class="form-control" placeholder="Email *"/>
+                  <div class="row ml-2">
+                    <small *ngIf="form('email').invalid && (form('email').dirty || (form('email').touched))"
+                           class="text text-danger float-left">
+                      <div *ngIf="form('email').errors?.required">
+                        Email harus di isi
+                      </div>
+                      <div *ngIf="form('email').errors?.pattern">
+                        Harus sesuai dengan format email
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Kata Sandi</label>
+                  <input type="password" formControlName="password" [(ngModel)]="passwordFirst" class="form-control"
+                         placeholder="Kata Sandi *"/>
+                  <div class="row ml-2">
+                    <small *ngIf="form('password').invalid && (form('password').dirty || (form('password').touched))"
+                           class="text text-danger float-left">
+                      <div *ngIf="form('password').errors?.required">
+                        Kata sandi harus di isi
+                      </div>
+                      <div *ngIf="form('password').errors?.pattern">
+                        Harus mengandung minimal 8 karakter, 1 huruf kapital, dan angka
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+
+                  <label>Konfirmasi Kata Sandi</label>
+                  <input type="password" formControlName="confirmPassword" class="form-control" [(ngModel)]="passwordSecond"
+                         (keyup)="passwordMatch()" placeholder="Konfirmasi Kata Sandi *"/>
+                  <small>
+                    <div class="form-text text-danger" *ngIf="isErrorValidation">
+                      {{ errorPassword }}
+                    </div>
+                  </small>
+                  <small
+                    *ngIf="form('confirmPassword').invalid && (form('confirmPassword').dirty || form('confirmPassword').touched)">
+                    <div class="form-text text-danger" *ngIf="form('confirmPassword').errors?.required">
+                      Konfirmasi kata sandi harus di isi
+                    </div>
+                  </small>
+                </div>
+<!--                <div class="form-group">-->
+<!--                  <label for="exampleFormControlFile1">Upload Foto</label>-->
+<!--                  <input type="file" #imageInput accept="image/*" (change)="processFile(imageInput)" class="form-control-file" id="exampleFormControlFile1">-->
+<!--                </div>-->
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Nomor Identitas</label>
+                  <input type="text" formControlName="idCardNo" class="form-control" placeholder="Nomor Identitas *"/>
+                  <div class="row ml-2">
+                    <small *ngIf="form('idCardNo').invalid && (form('idCardNo').dirty || (form('idCardNo').touched))"
+                           class="text text-danger float-left">
+                      <div *ngIf="form('idCardNo').errors?.required">
+                        Nomor identitas harus di isi
+                      </div>
+                      <div *ngIf="form('idCardNo').errors?.pattern">
+                        Harus menggunakan angka
+                      </div>
+                      <div  *ngIf="form('idCardNo').errors?.maxlength">
+                        Nomor identitas maksimum 16 angka
+                      </div>
+                      <div  *ngIf="form('idCardNo').errors?.minlength">
+                        Nomor identitas minimum 14 angka
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Tanggal Lahir</label>
+                  <input type="date" formControlName="birthdate" class="form-control" placeholder="Birthdate *"
+                  />
+                  <div class="row ml-2">
+                    <small *ngIf="form('birthdate').invalid && (form('birthdate').dirty || (form('birthdate').touched))"
+                           class="text text-danger float-left">
+                      <div *ngIf="form('birthdate').errors?.required">
+                        Tanggal lahir harus di isi
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Jenis Kelamin</label>
+                  <select class="form-control" formControlName="gender">
+                    <option>Perempuan</option>
+                    <option>Laki Laki</option>
+                  </select>
+                  <div class="row ml-2">
+                    <small *ngIf="form('gender').invalid && (form('gender').dirty || (form('gender').touched))"
+                           class="text text-danger float-left">
+                      <div *ngIf="form('gender').errors?.required">
+                        Jenis kelamin harus di isi
+                      </div>
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Nomor Telepon</label>
+                  <input type="text" formControlName="phoneNumber" class="form-control" placeholder="Nomor Telepon *"/>
+                  <div class="row ml-2">
+                    <small
+                      *ngIf="form('phoneNumber').invalid && (form('phoneNumber').dirty || (form('phoneNumber').touched))"
+                      class="text text-danger float-left">
+                      <div *ngIf="form('phoneNumber').errors?.required">
+                        No telepon harus di isi
+                      </div>
+                      <div *ngIf="form('phoneNumber').errors?.pattern">
+                        Harus menggunakan angka
+                      </div>
+                    </small>
+                    <small class="form-text text-danger " *ngIf="form('phoneNumber').invalid && form('phoneNumber').dirty">
+                      <div  *ngIf="form('phoneNumber').errors?.maxlength">
+                        Nomor telepon maksimum 13 angka
+                      </div>
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-custom mt-3" style="border-radius: 20px; width: 300px; margin-bottom: 50px; margin-left: 180px; height: 50px"
+                      [disabled]="registerForm.invalid || isErrorValidation">Daftar
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 register-left">
+      <img src="../../../../../assets/logo-putih.png" alt=""/>
+      <h3>Selamat Datang</h3>
+      <p>Kamu dapat mendaftar sebagai admin di halaman ini!</p>
+      <input routerLink="/admin" type="submit" name="" value="Login"/><br/>
+    </div>
+  </div>
+</div>
+</div>
+
