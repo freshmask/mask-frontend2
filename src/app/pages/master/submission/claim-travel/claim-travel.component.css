@@ -3,12 +3,13 @@ button{
 }
 
 td{
-  font-size: 15px;
+  font-size: 12px;
 }
 
 th{
   font-weight: bold;
 }
+
 
 .container{
   margin-top: -860px;
@@ -24,7 +25,7 @@ th{
 h4{
   color: #EF8526;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 

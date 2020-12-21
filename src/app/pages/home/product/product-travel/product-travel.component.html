@@ -217,7 +217,7 @@
           <tr *ngFor="let pt of loadedData; let i = index">
             <td *ngIf="pt.isActive==='true'">{{i+1}}</td>
             <td *ngIf="pt.isActive==='true'">{{pt.name}}</td>
-            <td *ngIf="pt.isActive==='true'">{{pt.days-1}} - {{pt.days}} hari</td>
+            <td *ngIf="pt.isActive==='true'">{{pt.days}} hari</td>
             <td *ngIf="pt.isActive==='true'">{{pt.price | commonCurrencyRp}}</td>
           </tr>
 

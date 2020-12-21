@@ -50,6 +50,11 @@
         </td>
         <td>
           <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Premi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
             Status Polis
           </a>
         </td>
@@ -77,6 +82,11 @@
           <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.trxpaId}}</p>
           <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.trxparId}}</p>
           <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.id}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.premi | commonCurrencyRp}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.premi | commonCurrencyRp}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.premi | commonCurrencyRp}}</p>
         </td>
         <td>
           <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusPolis}}</p>
@@ -128,6 +138,11 @@
         </td>
         <td>
           <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Premi
+          </a>
+        </td>
+        <td>
+          <a style="color: #EF8526" ng-click="sortType = 'name'; sortReverse = !sortReverse">
             Status Polis
           </a>
         </td>
@@ -155,6 +170,11 @@
           <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.trxpaId}}</p>
           <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.trxparId}}</p>
           <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.id}}</p>
+        </td>
+        <td>
+          <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.premi | commonCurrencyRp}}</p>
+          <p *ngIf="trans.transactionPAR!==null">{{trans.transactionPAR.premi | commonCurrencyRp}}</p>
+          <p *ngIf="trans.transactionTravel!==null">{{trans.transactionTravel.premi | commonCurrencyRp}}</p>
         </td>
         <td>
           <p *ngIf="trans.transactionPA!==null">{{trans.transactionPA.statusPolis}}</p>

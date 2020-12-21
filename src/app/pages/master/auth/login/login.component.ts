@@ -55,18 +55,18 @@ export class LoginComponent implements OnInit {
       this.x = JSON.parse(this.token);
       if(this.x.user.isActive === 'true'){
         if(this.x.user.role === '01' || this.x.user.role === '02'){
-          Swal.fire('Success', 'Success Login', 'success' );
+          Swal.fire('Success', 'Berhasil Login', 'success' );
           this.router.navigate(['/admin/user']);
         } else {
-          Swal.fire('Failed', 'You dont have access this page', 'error' );
+          Swal.fire('Gagal', 'Anda tidak memiliki akses untuk halaman ini', 'error' );
           this.router.navigate(['/']);
         }
       } else {
-        Swal.fire('Failed', 'Your account still inactive, please check your email to verified your account', 'error' );
+        Swal.fire('Gagal', 'Akun anda tidak aktif, silahkan menunggu aktivasi', 'error' );
         this.router.navigate(['/admin']);
       }
     }, (error) => {
-      Swal.fire('Failed', 'Email or password incorrect', 'error' );
+      Swal.fire('Gagal', 'Email atau kata sandi tidak benar', 'error' );
     });
   }
 

@@ -12,9 +12,11 @@
 h4{
   color: #EF8526;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
-
+td{
+  font-size: 12px;
+}
 
 @media screen and (max-width: 800px){
   .container{
