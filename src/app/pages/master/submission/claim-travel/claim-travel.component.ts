@@ -122,7 +122,7 @@ export class ClaimTravelComponent implements OnInit {
       }, error => {
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
-          'Anda gagal menyetujui klaim',
+          'Nominal persetujuan klaim yang anda inputkan melebihi jumlah tuntutan user',
           'error');
       });
   }
