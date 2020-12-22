@@ -8,6 +8,14 @@
       <img src="/assets/img/spinner.gif" alt="description of gif" />
     </div>
 
+    <div *ngIf="isLoadingReject" class="text-center">
+      <img src="/assets/img/loadings.gif" alt="description of gif" />
+    </div>
+
+    <div *ngIf="isLoadingApprove" class="text-center">
+      <img src="/assets/img/loadings.gif" alt="description of gif" />
+    </div>
+
     <button style="background-color: #e67e22; float: right; margin-bottom: 10px" class="btn btn-info">
       <a style="cursor: pointer" (click)="exportexcel()"><i class="icofont-download"></i> Export ke Excel
       </a>
@@ -81,9 +89,6 @@
                     [disabled]="claimpar.transaction.transactionPAR.statusClaim==='ditolak' ||
                     claimpar.transaction.transactionPAR.statusClaim==='disetujui'">
               <i class="fa fa-times" aria-hidden="true"></i></button>
-              <div *ngIf="isLoading && claimpar.transaction.transactionPAR.statusClaim==='Proses Persetujuan'" class="text-center">
-                <img src="/assets/img/loadings.gif" alt="description of gif" />
-              </div>
             </div>
           </td>
         </tr>

@@ -5,6 +5,12 @@
       <h5>Asuransi Kecelakaan Diri</h5>
     </div>
     <div *ngIf="isLoading" class="text-center">
+      <img src="/assets/img/spinner.gif" alt="description of gif" />
+    </div>
+    <div *ngIf="isLoadingReject" class="text-center">
+      <img src="/assets/img/loadings.gif" alt="description of gif" />
+    </div>
+    <div *ngIf="isLoadingApprove" class="text-center">
       <img src="/assets/img/loadings.gif" alt="description of gif" />
     </div>
 
@@ -92,10 +98,10 @@
                     [disabled]="claimpa.transaction.transactionPA.statusClaim==='ditolak' ||
                     claimpa.transaction.transactionPA.statusClaim==='disetujui'">
               <i class="fa fa-times" aria-hidden="true"></i>
+<!--              <div *ngIf="isLoading && claimpa.transaction.transactionPA.statusClaim==='Proses Persetujuan'" class="text-center">-->
+<!--                <img src="/assets/img/loadings.gif" alt="description of gif" />-->
+<!--              </div>-->
             </button>
-              <div *ngIf="isLoading && claimpa.transaction.transactionPA.statusClaim==='Proses Persetujuan'" class="text-center">
-                <img src="/assets/img/loadings.gif" alt="description of gif" />
-              </div>
             </div>
           </td>
         </tr>
@@ -119,9 +125,6 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
                 <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="onApproved(valueClaim)">Simpan Persetujuan</button>
-                <div *ngIf="isLoading" class="text-center">
-                  <img src="/assets/img/spinner.gif" alt="description of gif" />
-                </div>
               </div>
             </div>
           </div>

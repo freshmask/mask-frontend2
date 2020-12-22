@@ -26,6 +26,8 @@ export class ClaimTravelComponent implements OnInit {
   claimTravelList: string;
   fileName = 'Claim-travel-' + new Date().toDateString() + '.xlsx';
   isLoading = false;
+  isLoadingReject = false;
+  isLoadingApprove = false;
 
   constructor(private submissionService: SubmissionService,
               private adminService: AdminService) {
@@ -54,15 +56,36 @@ export class ClaimTravelComponent implements OnInit {
 
 
   rejectedClaimTravel(id){
-    this.isLoading = true;
-    this.submissionService.rejectedClaimTravel(id)
-      .subscribe(data => {
-        this.isLoading = false;
-        Swal.fire('Success',
-          'Klaim berhasil di tolak',
-          'success');
-        this.onGetClaimTravel();
-      });
+    Swal.fire({
+      title: 'Apakah benar?',
+      text: 'Anda ingin menolak klaim',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Tidak',
+      confirmButtonText: 'Ya, Tolak Klaim!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isLoadingReject = true;
+        this.submissionService.rejectedClaimTravel(id)
+          .subscribe(data => {
+            this.isLoadingReject = false;
+            Swal.fire(
+              'Berhasil!',
+              'Anda berhasil melakukan penolakan klaim',
+              'success'
+            );
+          }, error => {
+            this.isLoadingReject = false;
+            Swal.fire(
+              'Gagal!',
+              'Anda gagal melakukan penolakan klaim',
+              'error'
+            );
+          });
+      }
+    });
   }
 
   onSendClaimTravel(claimTravel){
@@ -70,7 +93,7 @@ export class ClaimTravelComponent implements OnInit {
   }
 
   onApproved(valueClaim){
-    this.isLoading = true;
+    this.isLoadingApprove = true;
     this.claimTravel = {
       id: this.travel.id,
       name: this.travel.name,
@@ -91,16 +114,16 @@ export class ClaimTravelComponent implements OnInit {
     // console.log('ini travid', this.travel.id);
     this.submissionService.approvalClaimTravel(this.travel.id, this.claimTravel)
       .subscribe(data => {
-        this.isLoading = false;
+        this.isLoadingApprove = false;
         Swal.fire('Success',
           'Klaim berhasil di setujui',
           'success');
         this.onGetClaimTravel();
       }, error => {
-        Swal.fire('Failed',
-          'Nilai yang anda masukkan melebihi tuntutan user, silahkan inputkan kembali',
+        this.isLoadingApprove = false;
+        Swal.fire('Gagal!',
+          'Anda gagal menyetujui klaim',
           'error');
-        this.isLoading = false;
       });
   }
 

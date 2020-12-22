@@ -28,6 +28,8 @@ export class ClaimParComponent implements OnInit {
   claimPARList: string;
   fileName = 'Claim-par-' + new Date().toDateString() + '.xlsx';
   isLoading = false;
+  isLoadingReject = false;
+  isLoadingApprove = false;
 
   constructor(private submissionService: SubmissionService,
               private adminService: AdminService) {
@@ -63,19 +65,40 @@ export class ClaimParComponent implements OnInit {
   }
 
   rejectedClaimPAR(id) {
-    this.isLoading = true;
-    this.submissionService.rejectedClaimPAR(id)
-      .subscribe(data => {
-        this.isLoading = false;
-        Swal.fire('Success',
-          'Klaim berhasil di tolak',
-          'success');
-        this.onGetClaimPAR();
-      });
+    Swal.fire({
+      title: 'Apakah benar?',
+      text: 'Anda ingin menolak klaim',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Tidak',
+      confirmButtonText: 'Ya, Tolak Klaim!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isLoadingReject = true;
+        this.submissionService.rejectedClaimPAR(id)
+          .subscribe(data => {
+            this.isLoadingReject = false;
+            Swal.fire(
+              'Berhasil!',
+              'Anda berhasil melakukan penolakan klaim',
+              'success'
+            );
+          }, error => {
+            this.isLoadingReject = false;
+            Swal.fire(
+              'Gagal!',
+              'Anda gagal melakukan penolakan klaim',
+              'error'
+            );
+          });
+      }
+    });
   }
 
   onApproved(valueClaim) {
-    this.isLoading = true;
+    this.isLoadingApprove = true;
     this.claimPAR = {
       claimparId: this.par.claimparId,
       name: this.par.name,
@@ -94,17 +117,17 @@ export class ClaimParComponent implements OnInit {
     };
     this.submissionService.approvalClaimPAR(this.par.claimparId , this.claimPAR)
       .subscribe(data => {
-        this.isLoading = false;
+        this.isLoadingApprove = false;
         Swal.fire('Success',
           'Klaim berhasil di setujui',
           'success');
         this.onGetClaimPAR();
         valueClaim = '';
       }, error => {
-        Swal.fire('Failed',
-          'Nilai yang anda masukkan melebihi tuntutan user, silahkan inputkan kembali',
+        this.isLoadingApprove = false;
+        Swal.fire('Gagal!',
+          'Anda gagal menyetujui klaim',
           'error');
-        this.isLoading = false;
       });
   }
 
