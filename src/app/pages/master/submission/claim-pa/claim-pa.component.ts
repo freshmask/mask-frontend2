@@ -123,7 +123,6 @@ export class ClaimPaComponent implements OnInit {
         this.onGetClaimPA();
         valueClaim = 0;
       }, error => {
-        alert(error.message);
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
           'Anda gagal menyetujui klaim',
