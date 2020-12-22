@@ -122,9 +122,10 @@ export class SubmissionService {
     });
   }
 
-  rejectedClaimPAR(id: string): Observable<ClaimPAR> {
+  rejectedClaimPAR(id: string, valueDesc): Observable<ClaimPAR> {
     return new Observable((observer: Observer<ClaimPAR>) => {
-      this.http.put(`api/rejectedClaimPAR/${id}?access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, id)
+      // tslint:disable-next-line:max-line-length
+      this.http.put(`api/rejectedClaimPAR/${id}?description=${valueDesc}&access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, id)
         .subscribe((response: ClaimPAR) => {
           observer.next(response);
         }, (error) => {
@@ -133,9 +134,9 @@ export class SubmissionService {
     });
   }
 
-  rejectedClaimPA(id: string): Observable<ClaimPA> {
+  rejectedClaimPA(id: string, valueDesc): Observable<ClaimPA> {
     return new Observable((observer: Observer<ClaimPA>) => {
-      this.http.put(`api/rejectedClaimPA/${id}?access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, id)
+      this.http.put(`api/rejectedClaimPA/${id}?description=${valueDesc}&access_token=${JSON.parse(window.sessionStorage.getItem('token')).access_token}`, id)
         .subscribe((response: ClaimPA) => {
           observer.next(response);
         }, (error) => {
@@ -144,9 +145,10 @@ export class SubmissionService {
     });
   }
 
-  rejectedClaimTravel(id: string): Observable<ClaimTravel> {
+  rejectedClaimTravel(id: string, valueDesc): Observable<ClaimTravel> {
     return new Observable((observer: Observer<ClaimTravel>) => {
-      this.http.put(`api/rejectedTravel/${id}?access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, id)
+      // tslint:disable-next-line:max-line-length
+      this.http.put(`api/rejectedTravel/${id}?description=${valueDesc}&access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, id)
         .subscribe((response: ClaimTravel) => {
           observer.next(response);
         }, (error) => {
@@ -157,6 +159,7 @@ export class SubmissionService {
 
   getMedicalCertificatePA(fileName): Observable<any> {
     return new Observable((observer: Observer<any>) => {
+      // tslint:disable-next-line:max-line-length
       this.http.get(`api/document-claim/${fileName}?access_token=` + (JSON.parse(window.sessionStorage.getItem('token')).access_token), { responseType: 'blob' as 'json'})
         .subscribe((response: any) => {
           const dataType = response.type;

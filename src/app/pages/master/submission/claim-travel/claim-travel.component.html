@@ -46,8 +46,8 @@
         <th>Tanggal Kejadian</th>
         <th>Penyebab Kerugian</th>
         <th>Lokasi Kerugian</th>
-        <th>Claim Submission</th>
-        <th>Claim Approval</th>
+        <th>Nilai Tuntutan Klaim</th>
+        <th>Nilai Persetujuan Klaim</th>
         <th>Status Klaim</th>
         <th>Surat Kematian</th>
         <th>Surat Keterangan Dokter</th>
@@ -94,7 +94,8 @@
                     claimTravel.transaction.transactionTravel.statusClaim==='ditolak'">
               <i class="fa fa-check-square-o" aria-hidden="true"></i>
             </button>&nbsp;
-            <button class="btn btn-danger" (click)="rejectedClaimTravel(claimTravel.id)"
+            <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal2"
+                    (click)="rejectedClaimTravel(claimTravel.id)"
                     [disabled]="claimTravel.transaction.transactionTravel.statusClaim==='ditolak' ||
                     claimTravel.transaction.transactionTravel.statusClaim==='disetujui'">
               <i class="fa fa-times" aria-hidden="true"></i>
@@ -127,6 +128,33 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Masukkan Alasan Penolakan Klaim</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Deskripsi penolakan klaim</label>&nbsp;
+            <input type="text" [(ngModel)]="valueDescription">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onReject(valueDescription)">
+              Simpan</button>
+            <div *ngIf="isLoading" class="text-center">
+              <img src="/assets/img/loadings.gif" alt="description of gif" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"></pagination-controls>
 
     <!--Table-->
@@ -148,8 +176,8 @@
         <th>Tanggal Kejadian</th>
         <th>Penyebab Kerugian</th>
         <th>Lokasi Kerugian</th>
-        <th>Claim Submission</th>
-        <th>Claim Approval</th>
+        <th>Nilai Tuntutan Klaim</th>
+        <th>Nilai Persetujuan Klaim</th>
         <th>Status Klaim</th>
         <th>Surat Kematian</th>
         <th>Surat Keterangan Dokter</th>
@@ -196,7 +224,8 @@
                     claimTravel.transaction.transactionTravel.statusClaim==='ditolak'">
               <i class="fa fa-check-square-o" aria-hidden="true"></i>
             </button>&nbsp;
-            <button class="btn btn-danger" (click)="rejectedClaimTravel(claimTravel.id)"
+            <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal3"
+                    (click)="rejectedClaimTravel(claimTravel.id)"
                     [disabled]="claimTravel.transaction.transactionTravel.statusClaim==='ditolak' ||
                     claimTravel.transaction.transactionTravel.statusClaim==='disetujui'">
               <i class="fa fa-times" aria-hidden="true"></i>
@@ -231,6 +260,33 @@
             <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onApproved(valueClaim)">Simpan Persetujuan</button>
             <div *ngIf="isLoading" class="text-center">
               <img src="/assets/img/spinner.gif" alt="description of gif" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel3">Masukkan Alasan Penolakan Klaim</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Deskripsi penolakan klaim</label>&nbsp;
+            <input type="text" [(ngModel)]="valueDescription">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onReject(valueDescription)">
+              Simpan</button>
+            <div *ngIf="isLoading" class="text-center">
+              <img src="/assets/img/loadings.gif" alt="description of gif" />
             </div>
           </div>
         </div>

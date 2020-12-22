@@ -29,6 +29,8 @@ export class ClaimPaComponent implements OnInit {
   isLoading = false;
   isLoadingReject = false;
   isLoadingApprove = false;
+  valueDescription: string;
+  claimRejectIdPa = localStorage.getItem('claimPaIdReject');
 
   constructor(private submissionService: SubmissionService,
               private adminService: AdminService) {
@@ -62,36 +64,7 @@ export class ClaimPaComponent implements OnInit {
   }
 
   rejectedClaimPA(id) {
-    Swal.fire({
-      title: 'Apakah benar?',
-      text: 'Anda ingin menolak klaim',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Tidak',
-      confirmButtonText: 'Ya, Tolak Klaim!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.isLoadingReject = true;
-        this.submissionService.rejectedClaimPA(id)
-          .subscribe(data => {
-            this.isLoadingReject = false;
-            Swal.fire(
-              'Berhasil!',
-              'Anda berhasil melakukan penolakan klaim',
-              'success'
-            );
-          }, error => {
-            this.isLoadingReject = false;
-            Swal.fire(
-              'Gagal!',
-              'Anda gagal melakukan penolakan klaim',
-              'error'
-            );
-          });
-      }
-    });
+    localStorage.setItem('claimPaIdReject', id);
   }
 
   onApproved(valueClaim) {
@@ -128,6 +101,23 @@ export class ClaimPaComponent implements OnInit {
           'Nominal persetujuan klaim yang anda inputkan melebihi jumlah tuntutan user',
           'error');
       });
+  }
+
+  onReject(valueDescription: string) {
+    this.isLoadingReject = true;
+    this.submissionService.rejectedClaimPA(this.claimRejectIdPa, valueDescription)
+      .subscribe( data => {
+        this.isLoadingReject = false;
+        Swal.fire('Success',
+          'Klaim berhasil di tolak',
+          'success');
+      }, error => {
+        this.isLoadingReject = false;
+        Swal.fire('Gagal!',
+          'Klaim tidak dapat ditolak',
+          'error');
+      });
+
   }
 
   downloadMedCertPA(filename){
@@ -208,6 +198,7 @@ export class ClaimPaComponent implements OnInit {
       });
   }
 
+
   exportexcel() {
     /* table id is passed over here */
     const element = document.getElementById('excel-table');
@@ -223,4 +214,6 @@ export class ClaimPaComponent implements OnInit {
       'Berhasil mendownload yang dibutuhlkan',
       'success');
   }
+
+
 }

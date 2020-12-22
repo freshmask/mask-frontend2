@@ -28,6 +28,8 @@ export class ClaimTravelComponent implements OnInit {
   isLoading = false;
   isLoadingReject = false;
   isLoadingApprove = false;
+  valueDescription: string;
+  claimRejectIdTravel = localStorage.getItem('claimTaIdReject');
 
   constructor(private submissionService: SubmissionService,
               private adminService: AdminService) {
@@ -56,36 +58,7 @@ export class ClaimTravelComponent implements OnInit {
 
 
   rejectedClaimTravel(id){
-    Swal.fire({
-      title: 'Apakah benar?',
-      text: 'Anda ingin menolak klaim',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Tidak',
-      confirmButtonText: 'Ya, Tolak Klaim!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.isLoadingReject = true;
-        this.submissionService.rejectedClaimTravel(id)
-          .subscribe(data => {
-            this.isLoadingReject = false;
-            Swal.fire(
-              'Berhasil!',
-              'Anda berhasil melakukan penolakan klaim',
-              'success'
-            );
-          }, error => {
-            this.isLoadingReject = false;
-            Swal.fire(
-              'Gagal!',
-              'Anda gagal melakukan penolakan klaim',
-              'error'
-            );
-          });
-      }
-    });
+    localStorage.setItem('claimTaIdReject', id);
   }
 
   onSendClaimTravel(claimTravel){
@@ -123,6 +96,21 @@ export class ClaimTravelComponent implements OnInit {
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
           'Nominal persetujuan klaim yang anda inputkan melebihi jumlah tuntutan user',
+          'error');
+      });
+  }
+  onReject(valueDescription: string) {
+    this.isLoadingReject = true;
+    this.submissionService.rejectedClaimTravel(this.claimRejectIdTravel, valueDescription)
+      .subscribe( data => {
+        this.isLoadingReject = false;
+        Swal.fire('Success',
+          'Klaim berhasil di tolak',
+          'success');
+      }, error => {
+        this.isLoadingReject = false;
+        Swal.fire('Gagal!',
+          'Klaim tidak dapat ditolak',
           'error');
       });
   }

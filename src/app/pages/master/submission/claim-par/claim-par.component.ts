@@ -31,6 +31,9 @@ export class ClaimParComponent implements OnInit {
   isLoadingReject = false;
   isLoadingApprove = false;
 
+  valueDescription: string;
+  claimRejectIdPar = localStorage.getItem('claimParIdReject');
+
   constructor(private submissionService: SubmissionService,
               private adminService: AdminService) {
   }
@@ -55,7 +58,7 @@ export class ClaimParComponent implements OnInit {
       });
   }
 
-  onSendClaimPAR(claimpar){
+  onSendClaimPAR(claimpar) {
     localStorage.setItem('claimPAR', JSON.stringify(claimpar));
   }
 
@@ -65,36 +68,7 @@ export class ClaimParComponent implements OnInit {
   }
 
   rejectedClaimPAR(id) {
-    Swal.fire({
-      title: 'Apakah benar?',
-      text: 'Anda ingin menolak klaim',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Tidak',
-      confirmButtonText: 'Ya, Tolak Klaim!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.isLoadingReject = true;
-        this.submissionService.rejectedClaimPAR(id)
-          .subscribe(data => {
-            this.isLoadingReject = false;
-            Swal.fire(
-              'Berhasil!',
-              'Anda berhasil melakukan penolakan klaim',
-              'success'
-            );
-          }, error => {
-            this.isLoadingReject = false;
-            Swal.fire(
-              'Gagal!',
-              'Anda gagal melakukan penolakan klaim',
-              'error'
-            );
-          });
-      }
-    });
+    localStorage.setItem('claimParIdReject', id);
   }
 
   onApproved(valueClaim) {
@@ -115,7 +89,7 @@ export class ClaimParComponent implements OnInit {
       lossReportUri: this.par.lossReportUri,
       authoritiesReportUri: this.par.authoritiesReportUri
     };
-    this.submissionService.approvalClaimPAR(this.par.claimparId , this.claimPAR)
+    this.submissionService.approvalClaimPAR(this.par.claimparId, this.claimPAR)
       .subscribe(data => {
         this.isLoadingApprove = false;
         Swal.fire('Success',
@@ -131,8 +105,26 @@ export class ClaimParComponent implements OnInit {
       });
   }
 
+  onReject(valueDescription: string) {
+    this.isLoadingReject = true;
+    this.submissionService.rejectedClaimPAR(this.claimRejectIdPar, valueDescription)
+      .subscribe( data => {
+        this.isLoadingReject = false;
+        Swal.fire('Success',
+          'Klaim berhasil di tolak',
+          'success');
+      }, error => {
+        this.isLoadingReject = false;
+        Swal.fire('Gagal!',
+          'Klaim tidak dapat ditolak',
+          'error');
+      });
 
-  downloadLossReport(filename){
+
+  }
+
+
+  downloadLossReport(filename) {
     this.submissionService.getLossReport(filename).subscribe((response) => {
       Swal.fire('Success',
         'Laporan Kerugian di Download',
@@ -144,7 +136,7 @@ export class ClaimParComponent implements OnInit {
     });
   }
 
-  downloadAuthorReport(filename){
+  downloadAuthorReport(filename) {
     this.submissionService.getAuthoritiesReport(filename).subscribe((response) => {
       Swal.fire('Success',
         'Laporan Pihak Berwenang Berhasil di Download',
@@ -156,23 +148,25 @@ export class ClaimParComponent implements OnInit {
     });
   }
 
-  onGetClaimPARList(){
+  onGetClaimPARList() {
     this.adminService.getClaimPAR()
       .subscribe(data => {
         for (const claimPAR of data) {
-          if (claimPAR.transaction.transactionPAR.statusClaim === 'Proses Persetujuan'){
+          if (claimPAR.transaction.transactionPAR.statusClaim === 'Proses Persetujuan') {
             this.numberClaimPAR += 1;
           }
         }
       }, error => {
-        alert(error);
+        Swal.fire('Gagal',
+          'Tidak terdapat data',
+          'error');
       });
   }
 
   searchLive() {
-    if (this.searchByName === ''){
+    if (this.searchByName === '') {
       this.isSearch = false;
-    }else{
+    } else {
       this.isSearch = true;
     }
     this.adminService.getClaimPAR()
@@ -187,7 +181,9 @@ export class ClaimParComponent implements OnInit {
           }
         }
       }, error => {
-        alert(error);
+        Swal.fire('Gagal',
+          'Tidak terdapat data',
+          'error');
       });
   }
 
@@ -205,4 +201,6 @@ export class ClaimParComponent implements OnInit {
 
 
   }
+
+
 }
