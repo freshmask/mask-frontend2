@@ -70,10 +70,29 @@ export class ListProductPaComponent implements OnInit {
   }
   // tslint:disable-next-line:typedef
   onChangeStatus(categoryId: string) {
-    this.prodService.changeStatusPa(categoryId)
-      .subscribe(data => {
-        this.getPackagesPA();
-      });
+    Swal.fire({
+      title: 'Apakah benar?',
+      text: 'Anda ingin merubah status aktivasi',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'tidak',
+      confirmButtonText: 'Ya, Ubah Status!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.prodService.changeStatusPa(categoryId)
+          .subscribe(data => {
+            this.getPackagesPA();
+            this.onGetCategoryPA(this.tempId);
+          });
+        Swal.fire(
+          'Berhasil!',
+          'Anda sudah merubah status',
+          'success'
+        );
+      }
+    });
   }
 
   // tslint:disable-next-line:typedef
@@ -92,7 +111,5 @@ export class ListProductPaComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, this.fileName);
-
-
   }
 }
