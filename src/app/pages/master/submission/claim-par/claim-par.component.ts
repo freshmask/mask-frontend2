@@ -95,13 +95,14 @@ export class ClaimParComponent implements OnInit {
         Swal.fire('Success',
           'Klaim berhasil di setujui',
           'success');
-        this.onGetClaimPAR();
         valueClaim = '';
+        window.location.reload();
       }, error => {
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
           'Nominal persetujuan klaim yang anda inputkan melebihi jumlah tuntutan user',
           'error');
+        window.location.reload();
       });
   }
 

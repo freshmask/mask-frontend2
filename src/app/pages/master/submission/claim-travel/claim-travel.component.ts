@@ -91,12 +91,13 @@ export class ClaimTravelComponent implements OnInit {
         Swal.fire('Success',
           'Klaim berhasil di setujui',
           'success');
-        this.onGetClaimTravel();
+        window.location.reload();
       }, error => {
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
           'Nominal persetujuan klaim yang anda inputkan melebihi jumlah tuntutan user',
           'error');
+        window.location.reload();
       });
   }
   onReject(valueDescription: string) {
@@ -107,11 +108,13 @@ export class ClaimTravelComponent implements OnInit {
         Swal.fire('Success',
           'Klaim berhasil di tolak',
           'success');
+        window.location.reload();
       }, error => {
         this.isLoadingReject = false;
         Swal.fire('Gagal!',
           'Klaim tidak dapat ditolak',
           'error');
+        window.location.reload();
       });
   }
 

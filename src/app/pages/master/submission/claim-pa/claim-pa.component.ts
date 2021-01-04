@@ -42,6 +42,10 @@ export class ClaimPaComponent implements OnInit {
     this.searchLive();
   }
 
+  ngDoCheck(){
+
+  }
+
   onGetClaimPA() {
     this.isLoading = true;
     this.submissionService.getClaimPA(this.page, this.size)
@@ -93,14 +97,16 @@ export class ClaimPaComponent implements OnInit {
         Swal.fire('Success',
           'Klaim berhasil di setujui',
           'success');
-        this.onGetClaimPA();
+        window.location.reload();
         valueClaim = 0;
       }, error => {
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
           'Nominal persetujuan klaim yang anda inputkan melebihi jumlah tuntutan user',
           'error');
+        window.location.reload();
       });
+
   }
 
   onReject(valueDescription: string) {
@@ -111,13 +117,14 @@ export class ClaimPaComponent implements OnInit {
         Swal.fire('Success',
           'Klaim berhasil di tolak',
           'success');
+        window.location.reload();
       }, error => {
         this.isLoadingReject = false;
         Swal.fire('Gagal!',
           'Klaim tidak dapat ditolak',
           'error');
+        window.location.reload();
       });
-
   }
 
   downloadMedCertPA(filename){
@@ -148,6 +155,7 @@ export class ClaimPaComponent implements OnInit {
           'error');
       });
     }
+
   }
 
   downloadMedExpPA(filename){

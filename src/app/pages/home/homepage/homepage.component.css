@@ -1394,6 +1394,7 @@ section {
   .breadcrumbs ol li {
     display: inline-block;
   }
+
 }
 
 /*--------------------------------------------------------------
@@ -1478,6 +1479,25 @@ section {
     position: static;
     margin-top: 30px;
   }
+  .modalDialog {
+    font-family: retroica;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.89);
+    z-index: 99999;
+    opacity: 1;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: auto;
+    padding-top: 50px;
+  }
+  .modalDialog > div {
+    width: 30%;
+    height: 30%;
+  }
 }
 
 
@@ -1505,8 +1525,8 @@ section {
 }
 
 .modalDialog > div {
-  width: 480px;
-  height: 400px;
+  width: 30%;
+  height: 60%;
   position: relative;
   margin: 8% auto;
   padding: 5px 20px 13px 20px;
