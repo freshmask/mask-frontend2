@@ -6,6 +6,7 @@ import { FormClaimPaComponent } from './form-claim-pa/form-claim-pa.component';
 import { FormClaimParComponent } from './form-claim-par/form-claim-par.component';
 import { FormClaimTravelComponent } from './form-claim-travel/form-claim-travel.component';
 import {HomeModule} from '../home.module';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {HomeModule} from '../home.module';
   imports: [
     CommonModule,
     ClaimRoutingModule,
-    HomeModule
+    HomeModule,
+    FormsModule
   ]
 })
 export class ClaimModule { }

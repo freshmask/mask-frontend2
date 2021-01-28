@@ -1,1 +1,197 @@
-<p>form-claim-par works!</p>
+<header id="header" class="fixed-top d-flex align-items-center  header-transparent ">
+  <div class="container d-flex align-items-center">
+
+    <div class="logo mr-auto">
+      <!--      <h1 class="text-light"><a href="index.html">M-ASK</a></h1>-->
+      <a href="index.html"><img src="assets/img/homepage/logo%20mask%20putih.png" alt="" class="img-fluid"></a>
+    </div>
+
+    <nav class="nav-menu navbar-expand-lg d-lg-block">
+      <button style="border-color: #e67e22" class="navbar-toggler navbar-toggler-right navbar-light" type="button"
+              data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon "></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li><a href="">Home</a></li>
+          <li class="drop-down"><a href="">Claim</a>
+            <ul>
+              <li><a routerLink="../pas">Asuransi Kecelakaan Diri</a></li>
+              <li><a routerLink="../pars">Asuransi Properti/ Harta Benda</a></li>
+              <li><a routerLink="../travels">Asuransi Perjalanan</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </nav><!-- .nav-menu -->
+
+  </div>
+</header><!-- End Header -->
+<div>
+  <div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup">
+      <div class="containers">
+        <div class="section-title" data-aos="zoom-out">
+          <h2>PENGAJUAN KLAIM</h2>
+          <p>ASURANSI PROPERTI/ HARTA BENDA</p>
+        </div>
+        <div class="signup-content">
+          <div class="signup-form">
+            <form [formGroup]="claimPaForm" method="POST" (ngSubmit)="addClaimPa(claimPaForm.value)" class="register-form" id="register-form">
+              <div class="form-group">
+                <label for="polisId"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input formControlName="polisId" type="text" name="polisId" id="polisId" placeholder="Nomor Polis" class="form-control"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('polisId').invalid && (form('polisId').dirty || (form('polisId').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('polisId').errors?.required">
+                      Nomor polis harus di isi
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="identityNumber"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input class="form-control" type="text" name="identityNumber" id="identityNumber" placeholder="Nomor Identitas"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('identityNumber').invalid && (form('idCardNo').dirty || (form('idCardNo').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('identityNumber').errors?.required">
+                      Nomor identitas harus di isi
+                    </div>
+                    <div *ngIf="form('identityNumber').errors?.pattern">
+                      Harus menggunakan angka
+                    </div>
+                    <div  *ngIf="form('identityNumber').errors?.maxlength">
+                      Nomor identitas maksimum 16 angka
+                    </div>
+                    <div  *ngIf="form('identityNumber').errors?.minlength">
+                      Nomor identitas minimum 14 angka
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input type="text" name="name" id="name" placeholder="Nama Customer"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('name').invalid && (form('name').dirty || (form('name').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('name').errors?.required">
+                      Nama harus di isi
+                    </div>
+                    <div  *ngIf="form('name').errors?.maxlength">
+                      Nama maksimum 50 karakter
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                <input type="email" name="email" id="email" placeholder="Email"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('email').invalid && (form('email').dirty || (form('email').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('email').errors?.required">
+                      Email harus di isi
+                    </div>
+                    <div *ngIf="form('email').errors?.pattern">
+                      Harus sesuai dengan format email
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="reportDate"><i class="zmdi zmdi-lock"></i>Tanggal Laporan : </label>
+                <br>
+                <input type="date" name="reportDate" id="reportDate" placeholder="Tanggal Laporan"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('reportDate').invalid && (form('reportDate').dirty || (form('reportDate').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('reportDate').errors?.required">
+                      Tanggal Laporan
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="incidentDate"><i class="zmdi zmdi-lock"></i>Tanggal Insiden : </label>
+                <br>
+                <input type="date" name="incidentDate" id="incidentDate" placeholder="Tanggal Insiden"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('incidentDate').invalid && (form('incidentDate').dirty || (form('incidentDate').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('incidentDate').errors?.required">
+                      Tanggal Insiden
+                    </div>
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <p style="color: #0E1119">Penyebab Kerugian : </p>
+                <!--                <label style="margin: 0px">Penyebab Kerugian</label>-->
+                <select class="form-control" formControlName="lossCause">
+                  <option>Kematian</option>
+                  <option>Bukan Kematian</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="incidentLocation"><i class="zmdi zmdi-lock"></i></label>
+                <input type="text" name="incidentLocation" id="incidentLocation" placeholder="Lokasi Kejadian"/>
+              </div>
+              <div class="form-group">
+                <label for="claimSubmission"><i class="zmdi zmdi-lock"></i></label>
+                <input formControlName="claimSubmission" class="form-control" type="text" name="claimSubmission" id="claimSubmission" placeholder="Nominal Pengajuan Klaim"/>
+              </div>
+              <div class="form-group">
+                <label for="medicalCertificate"><i class="zmdi zmdi-lock"></i>Upload Surat Keterangan Dokter
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px" #imageInput type="file" accept="image/*"
+                       (change)="processFile(imageInput)" class="form-control" id="medicalCertificate">
+              </div>
+              <div class="form-group">
+                <label style="width: 100%" for="deathCertificate"><i class="zmdi zmdi-lock"></i>Upload Surat Kematian (Jika Ada)
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px;" #imageInput type="file" accept="image/*"
+                       (change)="processFile(imageInput)" class="form-control" id="deathCertificate">
+              </div>
+              <div class="form-group">
+                <label for="medicalExpenses"><i class="zmdi zmdi-lock"></i>Upload Biaya Pengobatan
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px" #imageInput type="file" accept="image/*"
+                       (change)="processFile(imageInput)" class="form-control" id="medicalExpenses">
+              </div>
+
+
+              <!--              <div class="form-group">-->
+              <!--                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"/>-->
+              <!--                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a-->
+              <!--                  href="#" class="term-service">Terms of service</a></label>-->
+              <!--              </div>-->
+              <div class="form-group form-button">
+                <input routerLink="/" type="submit" name="signup" id="signup" class="form-submit" value="Ajukan Klaim"
+                       [disabled]="claimPaForm.invalid"
+                />
+              </div>
+
+            </form>
+          </div>
+          <div  class="signup-image">
+            <figure style="margin-top: 100px"><img src="../../../../../assets/img/homepage/propertyAllrisk.jpg" alt="sing up image"></figure>
+            <!--          <a href="#" class="signup-image-link">I am already member</a>-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+
+<app-footer></app-footer>

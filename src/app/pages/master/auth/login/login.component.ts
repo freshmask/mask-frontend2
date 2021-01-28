@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
       this.token = window.sessionStorage.getItem('token');
       this.x = JSON.parse(this.token);
       if(this.x.user.isActive === 'true'){
-        if(this.x.user.role === '01' || this.x.user.role === '02'){
+        if(this.x.user.role === '01' || this.x.user.role === '02' || this.x.user.role === '04'){
           Swal.fire('Success', 'Berhasil Login', 'success' );
           this.router.navigate(['/admin/user']);
         } else {

@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {AuthGuardSubmissionService} from './auth-guard-submission.service';
+import {AuthGuardService} from './auth-guard.service';
+import {ListAdminComponent} from './admin/list-admin/list-admin.component';
 
 const routes: Routes = [
   {
@@ -25,6 +28,7 @@ const routes: Routes = [
   {
     path: 'submission',
     loadChildren: () => import('./submission/submission.module').then((m) => m.SubmissionModule),
+      canActivate: [AuthGuardSubmissionService]
   },
   {
     path: 'report',
@@ -33,6 +37,10 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+  },
+  {
+    path: 'claim-check',
+    loadChildren: () => import('./claim-check/claim-check.module').then((m) => m.ClaimCheckModule),
   }
 
 

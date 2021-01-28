@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardSubmissionService {
+
   token = window.sessionStorage.getItem('token');
   x = JSON.parse(this.token);
   role = this.x.user.role;
@@ -15,7 +16,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.role !== '02'){
+    if (this.role !== '04'){
       return true;
     }
     else{

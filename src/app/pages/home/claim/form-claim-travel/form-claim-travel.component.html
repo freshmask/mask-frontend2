@@ -1,1 +1,321 @@
-<p>form-claim-travel works!</p>
+<header id="header" class="fixed-top d-flex align-items-center  header-transparent ">
+  <div class="container d-flex align-items-center">
+
+    <div class="logo mr-auto">
+      <!--      <h1 class="text-light"><a href="index.html">M-ASK</a></h1>-->
+      <a href="index.html"><img src="assets/img/homepage/logo%20mask.png" alt="" class="img-fluid"></a>
+    </div>
+
+    <nav class="nav-menu navbar-expand-lg d-lg-block">
+      <button style="border-color: #e67e22" class="navbar-toggler navbar-toggler-right navbar-light" type="button"
+              data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon "></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li><a href="">Home</a></li>
+          <li class="drop-down"><a href="">Klaim</a>
+            <ul>
+              <li><a routerLink="../pas">Asuransi Kecelakaan Diri</a></li>
+              <li><a routerLink="../travels">Asuransi Perjalanan</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </nav><!-- .nav-menu -->
+
+  </div>
+</header><!-- End Header -->
+<div>
+  <div class="main">
+
+    <!-- Sign up form -->
+    <section style="margin-top: -100px"  class="signup">
+      <div class="containers">
+        <div class="section-title" data-aos="zoom-out">
+          <h2>PENGAJUAN KLAIM</h2>
+          <p>ASURANSI PERJALANAN</p>
+        </div>
+        <div style="margin-top: -100px" class="signup-content">
+          <div class="signup-form">
+            <form [formGroup]="claimTravelForm" method="POST" (ngSubmit)="addClaimTravel(claimTravelForm.value, claimTravelForm.valid)"
+                  class="register-form" id="register-form">
+              <div class="form-group">
+                <label for="polisId"><i class="zmdi zmdi-account material-icons-name"></i></label>
+
+
+                <p style="color: #0E1119">Nomor Polis : </p>
+                <input formControlName="polisId" type="text" name="polisId" id="polisId" placeholder="Nomor Polis"
+                       class="form-control" [(ngModel)]="polisID" />
+                      <!-- <a type="submit" class="cta-btn align-middle" (click)="onGetCustomerPAByPolisId(polisID)" >Masukan</a> -->
+                      <!-- <button type="submit" class="button btn-primary" (click)="testForm(polisID)">Masukkan</button> -->
+                      <div class="row ml-2">
+
+                  <small *ngIf="form('polisId').invalid && (form('polisId').dirty || (form('polisId').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('polisId').errors?.required">
+                      Nomor polis harus di isi
+                    </div>
+                  </small>
+              </div>
+
+            </div>
+            <div>
+            <a type="submit" class="cta-btn align-middle" style="float:right; margin-top: -20px;" (click)="onGetCustomerPAByPolisId(polisID)" >Cek</a>
+            </div>
+
+            <div class="form-group" style="margin-top: 60px;">
+                <p style="color: #0E1119">Nomor Identitas : </p>
+                <a class="text-custom" *ngIf="customerTravel===undefined"> </a>
+                <a class="text-custom" *ngIf="customerTravel!==undefined">{{customerTravel.identityNo}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Nama Tertanggung : </p>
+                <a class="text-custom" *ngIf="customerTravel===undefined"> </a>
+                <a class="text-custom" *ngIf="customerTravel!==undefined">{{customerTravel.name}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Email Tertanggung : </p>
+                <a class="text-custom" *ngIf="customerTravel===undefined"> </a>
+                <a class="text-custom" *ngIf="customerTravel!==undefined">{{customerTravel.email}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Nama Ahli Waris : </p>
+                <a class="text-custom" *ngIf="customerTravel===undefined"> </a>
+                <a class="text-custom" *ngIf="customerTravel!==undefined">{{customerTravel.heirName}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Email Ahli Waris : </p>
+                <a class="text-custom" *ngIf="customerTravel===undefined"> </a>
+                <a class="text-custom" *ngIf="customerTravel!==undefined">{{customerTravel.heirEmail}}</a>
+              </div>
+
+<!--              <div class="form-group">-->
+<!--                <label for="identityNumber"><i class="zmdi zmdi-account material-icons-name"></i></label>-->
+<!--                <input formControlName="identityNumber" class="form-control" type="text" name="identityNumber" id="identityNumber"-->
+<!--                       placeholder="{{customerTravel.identityNo}}"/>-->
+<!--                <div class="row ml-2">-->
+<!--                  <small-->
+<!--                    *ngIf="form('identityNumber').invalid && (form('identityNumber').dirty || (form('identityNumber').touched))"-->
+<!--                    class="text text-danger float-left">-->
+<!--                    <div *ngIf="form('identityNumber').errors?.required">-->
+<!--                      Nomor identitas harus di isi-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('identityNumber').errors?.pattern">-->
+<!--                      Harus menggunakan angka-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('identityNumber').errors?.maxlength">-->
+<!--                      Nomor identitas maksimum 16 angka-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('identityNumber').errors?.minlength">-->
+<!--                      Nomor identitas minimum 14 angka-->
+<!--                    </div>-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="nameOfTheInsured"><i class="zmdi zmdi-account material-icons-name"></i></label>-->
+<!--                <input formControlName="nameOfTheInsured" class="form-control" type="text" name="nameOfTheInsured" id="nameOfTheInsured" placeholder="{{customerTravel.name}}"/>-->
+<!--                <div class="row ml-2">-->
+<!--                  <small *ngIf="form('nameOfTheInsured').invalid && (form('nameOfTheInsured').dirty || (form('nameOfTheInsured').touched))"-->
+<!--                         class="text text-danger float-left">-->
+<!--                    <div *ngIf="form('nameOfTheInsured').errors?.required">-->
+<!--                      Nama harus di isi-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('nameOfTheInsured').errors?.maxlength">-->
+<!--                      Nama maksimum 50 karakter-->
+<!--                    </div>-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="emailOfTheInsured"><i class="zmdi zmdi-email"></i></label>-->
+<!--                <input formControlName="emailOfTheInsured" class="form-control" type="email" name="emailOfTheInsured" id="emailOfTheInsured" placeholder="{{customerTravel.email}}"/>-->
+<!--                <div class="row ml-2">-->
+<!--                  <small *ngIf="form('emailOfTheInsured').invalid && (form('emailOfTheInsured').dirty || (form('emailOfTheInsured').touched))"-->
+<!--                         class="text text-danger float-left">-->
+<!--                    <div *ngIf="form('emailOfTheInsured').errors?.required">-->
+<!--                      Email harus di isi-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('emailOfTheInsured').errors?.pattern">-->
+<!--                      Harus sesuai dengan format email-->
+<!--                    </div>-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="heirName"><i class="zmdi zmdi-account material-icons-name"></i></label>-->
+<!--                <input formControlName="heirName" class="form-control" type="text" name="heirName" id="heirName" placeholder="{{customerTravel.heirName}}"/>-->
+<!--                <div class="row ml-2">-->
+<!--                  <small *ngIf="form('heirName').invalid && (form('heirName').dirty || (form('heirName').touched))"-->
+<!--                         class="text text-danger float-left">-->
+<!--                    <div *ngIf="form('heirName').errors?.required">-->
+<!--                      Nama harus di isi-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('heirName').errors?.maxlength">-->
+<!--                      Nama maksimum 50 karakter-->
+<!--                    </div>-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="heirEmail"><i class="zmdi zmdi-email"></i></label>-->
+<!--                <input formControlName="heirEmail" class="form-control" type="email" name="heirEmail" id="heirEmail" placeholder="{{customerTravel.heirEmail}}"/>-->
+<!--                <div class="row ml-2">-->
+<!--                  <small *ngIf="form('heirEmail').invalid && (form('heirEmail').dirty || (form('heirEmail').touched))"-->
+<!--                         class="text text-danger float-left">-->
+<!--                    <div *ngIf="form('heirEmail').errors?.required">-->
+<!--                      Email harus di isi-->
+<!--                    </div>-->
+<!--                    <div *ngIf="form('heirEmail').errors?.pattern">-->
+<!--                      Harus sesuai dengan format email-->
+<!--                    </div>-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <div class="exmp-wrp">-->
+<!--                  <div class="btn-wrp">-->
+<!--                    <br>-->
+<!--                    <input type="date" class="form-control"/>-->
+<!--                  </div>-->
+<!--                  <button class="btn"><i class="icofont-calendar"></i></button>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <label>Tanggal Laporan : </label>-->
+<!--              <div class="form-group">-->
+<!--                <br>-->
+<!--                <input class="form-control" type="date" formControlName="reportDate" />-->
+<!--                <div class="row ml-2">-->
+<!--                  <small-->
+<!--                    *ngIf="form('reportDate').invalid && (form('reportDate').dirty || (form('reportDate').touched))"-->
+<!--                    class="text text-danger float-left">-->
+<!--                    <div *ngIf="form('reportDate').errors?.required">-->
+<!--                      Tanggal Laporan harus di isi-->
+<!--                    </div>-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <i class="zmdi zmdi-lock"></i>-->
+              <div class="form-group">
+                <p style="color: #0E1119" for="incidentDate">Tanggal Kejadian : </p>
+                <br>
+                <input type="date" formControlName="incidentDate" class="form-control" name="incidentDate" id="incidentDate" placeholder="Tanggal Insiden"/>
+                <div class="row ml-2">
+                  <small
+                    *ngIf="form('incidentDate').invalid && (form('incidentDate').dirty || (form('incidentDate').touched))"
+                    class="text text-danger float-left">
+                    <div *ngIf="form('incidentDate').errors?.required">
+                      Tanggal Insiden harus di isi
+                    </div>
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <p style="color: #0E1119">Penyebab Kerugian : </p>
+                <!--                <label style="margin: 0px">Penyebab Kerugian</label>-->
+                <select class="form-control" formControlName="lossCause">
+                  <option>Meninggal Dunia karena Kecelakaan</option>
+                  <option>Cacat Tetap akibat kecelakaan</option>
+                  <option>Pembatalan Perjalanan</option>
+                  <option>Pengurangan Perjalanan</option>
+                  <option>Penundaan Perjalanan</option>
+                  <option>Keterlambatan Penerbangan</option>
+                  <option>Tertinggal Penerbangan</option>
+                  <option>Pembajakan Pesawat Terbang</option>
+                  <option>Keterlambatan bagasi</option>
+                  <option>Kehilangan atau kerusakan bagasi</option>
+                  <option>Kehilangan dokumen perjalanan atau barang pribadi</option>
+                  <option>Perawatan medis</option>
+                  <option>Evakuasi medis darurat</option>
+                  <option>Pendampingan anak</option>
+                  <option>Perjalanan salah satu anggota keluarga</option>
+                  <option>Repatriasi Pemulangan jenazah</option>
+                  <option>Cidera badan atau kerusakan fisik harta benda pihak ketiga</option>
+                  <option>Layanan pengiriman pesan darurat</option>
+                  <option>Layanan pencarian bagasi atau dokumen hilang</option>
+                  <option>Layanan alamat dan nomor telepon Kedutaan</option>
+                  <option>Layanan 24 jam Tele-Konsultasi medis, Evaluasi dan Rujukan Medis</option>
+                  <option>Layanan informasi Pra-Perjalanan</option>
+                  <option>Layanan rujukan pengacara dan penterjemah</option>
+
+
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="incidentLocation"><i class="zmdi zmdi-lock"></i></label>
+                <input formControlName="incidentLocation" class="form-control" type="text" name="incidentLocation" id="incidentLocation" placeholder="Lokasi Kejadian"/>
+              </div>
+              <div class="form-group">
+                <label for="claimSubmission"><i class="zmdi zmdi-lock"></i></label>
+                <input formControlName="claimSubmission" class="form-control" type="number" name="claimSubmission"
+                       id="claimSubmission" placeholder="Nominal Pengajuan Klaim"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('claimSubmission').invalid && (form('claimSubmission').dirty || (form('claimSubmission').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('claimSubmission').errors?.required">
+                      Nominal pengajuan klaim harus di isi
+                    </div>
+                    <div *ngIf="form('claimSubmission').errors?.pattern">
+                      Harus dengan format angka
+                    </div>
+                    <div *ngIf="form('claimSubmission').errors?.max">
+                      Nominal tidak boleh lebih dari Rp. 5000.000.000,-
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label htmlFor='image' for="medicalCertificate"><i class="zmdi zmdi-lock"></i>Upload Surat Keterangan Dokter
+                </label>
+                <input #imageInput class="form-control" style="margin-bottom: 10px; margin-top: 20px" type="file" accept="application/*"
+                       (change)="processFileMC(imageInput)" id="medicalCertificate"/>
+<!--                       value={this.state.image}-->
+              </div>
+              <div class="form-group">
+                <label style="width: 100%" for="deathCertificate"><i class="zmdi zmdi-lock"></i>Upload Surat Kematian
+                  (Jika Ada)
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px;" #imageInput type="file" accept="application/*"
+                       (change)="processFileDC(imageInput)" class="form-control" id="deathCertificate">
+              </div>
+              <div class="form-group">
+                <label for="medicalExpenses"><i class="zmdi zmdi-lock"></i>Upload Biaya Pengobatan/Dokumen terkait
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px" #imageInput type="file" accept="application/*"
+                       (change)="processFileME(imageInput)" class="form-control" id="medicalExpenses">
+              </div>
+
+
+              <!--              <div class="form-group">-->
+              <!--                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"/>-->
+              <!--                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a-->
+              <!--                  href="#" class="term-service">Terms of service</a></label>-->
+              <!--              </div>-->
+              <div class="form-group form-button">
+                <input type="submit" name="signup" id="signup" class="form-submit" value="Ajukan Klaim"
+
+                />
+              </div>
+
+            </form>
+          </div>
+          <div class="signup-image">
+            <figure style="margin-top: 100px"><img src="../../../../../assets/img/homepage/travelInsurance.jpg"
+                                                   alt="sing up image"></figure>
+            <!--          <a href="#" class="signup-image-link">I am already member</a>-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+
+<app-footer></app-footer>

@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {SubmissionService} from '../submission.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from '@angular/core';
 import {ClaimPAR} from '../../transaction/transaction-model/ClaimPAR.model';
+import {SubmissionService} from '../../submission/submission.service';
 import {AdminService} from '../../admin/admin.service';
+import Swal from "sweetalert2";
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-claim-par',
-  templateUrl: './claim-par.component.html',
-  styleUrls: ['./claim-par.component.css']
+  selector: 'app-claim-check-par',
+  templateUrl: './claim-check-par.component.html',
+  styleUrls: ['./claim-check-par.component.css']
 })
-export class ClaimParComponent implements OnInit {
+export class ClaimCheckParComponent implements OnInit {
   valueClaim: number;
   claimPAR: ClaimPAR;
+  claimPARChecked: any;
   claimpar = localStorage.getItem('claimPAR');
   // par = JSON.parse(this.claimpar);
   par;
@@ -59,8 +60,25 @@ export class ClaimParComponent implements OnInit {
       });
   }
 
-  onSendClaimPAR(claimpar) {
-    localStorage.setItem('claimPAR', JSON.stringify(claimpar));
+  onSendClaimPAR(claimpar, id) {
+    this.claimPARChecked = {
+      name: claimpar.name,
+      email: claimpar.email,
+    };
+    this.submissionService.checkerClaimPAR(this.claimPARChecked, id)
+      .subscribe(data => {
+        this.isLoadingApprove = false;
+        Swal.fire('Success',
+          'Klaim berhasil di teruskan untuk proses persetujuan',
+          'success');
+        // window.location.reload();
+      }, error => {
+        this.isLoadingApprove = false;
+        Swal.fire('Gagal!',
+          'Gagal',
+          'error');
+        // window.location.reload();
+      });
   }
 
   onPageChange(event) {
@@ -205,6 +223,5 @@ export class ClaimParComponent implements OnInit {
 
 
   }
-
 
 }

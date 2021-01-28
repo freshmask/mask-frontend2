@@ -49,7 +49,7 @@
 .nav-menu a {
   display: block;
   position: relative;
-  color: #fff;
+  color: #ef6603;
   padding: 5px 15px 7px 15px;
   margin-left: 5px;
   transition: 0.3s;
@@ -59,7 +59,7 @@
 }
 
 .nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
-  background: #ef6603;
+  background: #FFFFFF;
   text-decoration: none;
 }
 
@@ -540,12 +540,12 @@ figure {
 
 .form-submit {
   display: inline-block;
-  background: #6dabe4;
+  background: #EF8526;
   color: #fff;
   border-bottom: none;
   width: auto;
   padding: 15px 39px;
-  border-radius: 5px;
+  border-radius: 15px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -o-border-radius: 5px;
@@ -863,8 +863,94 @@ label{
   /*padding: 6px 30px;*/
   font-family: Poppins;
   box-sizing: border-box;
-  margin-bottom: 20px;
-  padding-bottom: 30px;
+  margin : 10px;
+  /*padding-top: 5px;*/
+  padding-bottom: 60px;
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/*add*/
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-title {
+  padding: 10px;
+  padding-bottom: 40px;
+  margin-left: 100px;
+}
+
+.section-title h2 {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0;
+  line-height: 1px;
+  margin: 0 0 5px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #aaaaaa;
+  font-family: "Poppins", sans-serif;
+}
+
+.section-title h2::after {
+  content: "";
+  width: 120px;
+  height: 1px;
+  display: inline-block;
+  background: #fd9042;
+  margin: 4px 10px;
+}
+
+.section-title p {
+  margin: 0;
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  color: #EF8526;
+}
+
+.text-custom{
+  width: 100%;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 6px 30px;
+  font-family: Poppins;
+  box-sizing: border-box;
+  color: black;
+  line-height: 1.2;
+}
+.text-non-custom{
+  width: 100%;
+  display: block;
+  border: none;
+  padding: 6px 30px;
+  font-family: Poppins;
+  box-sizing: border-box;
+  color: black;
+  line-height: 2;
+}
+.cta-btn {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 10px;
+  color: #fff;
+  background: #ef6603;
+}
+
+.cta-btn:hover {
+  background: #fff;
+  color: #ef6603;
+}

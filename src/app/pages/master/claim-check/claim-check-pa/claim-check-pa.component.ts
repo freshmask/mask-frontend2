@@ -1,47 +1,49 @@
-import {Component, OnInit} from '@angular/core';
-import {SubmissionService} from '../submission.service';
-import Swal from 'sweetalert2';
-import {ClaimTravel} from '../../transaction/transaction-model/ClaimTravel.model';
+import { Component, OnInit } from '@angular/core';
+import {ClaimPA} from '../../transaction/transaction-model/ClaimPA.model';
+import {SubmissionService} from '../../submission/submission.service';
 import {AdminService} from '../../admin/admin.service';
+import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-claim-travel',
-  templateUrl: './claim-travel.component.html',
-  styleUrls: ['./claim-travel.component.css']
+  selector: 'app-claim-check-pa',
+  templateUrl: './claim-check-pa.component.html',
+  styleUrls: ['./claim-check-pa.component.css']
 })
-export class ClaimTravelComponent implements OnInit {
+export class ClaimCheckPaComponent implements OnInit {
   page = 1;
   size = 5;
   totalItems;
   isSearch = false;
   searchByName = '';
   loadedPosts: any[];
+  claimPA: ClaimPA;
+  // claimpa = localStorage.getItem('claimPA');
   valueClaim: number;
-  claimTravel: ClaimTravel;
-  // claimtravel = localStorage.getItem('claimTravel');
-  travel;
-  numberClaimTravel = 0;
   newData: any;
-  claimTravelList: string;
-  fileName = 'Claim-travel-' + new Date().toDateString() + '.xlsx';
+  claimPAList: string;
+  numberClaimPA = 0;
+  fileName = 'Claim-pa-' + new Date().toDateString() + '.xlsx';
   isLoading = false;
   isLoadingReject = false;
   isLoadingApprove = false;
   valueDescription: string;
-  claimRejectIdTravel;
+  claimRejectIdPa = localStorage.getItem('claimPaIdReject');
+  pa;
 
   constructor(private submissionService: SubmissionService,
               private adminService: AdminService) {
   }
 
+
   ngOnInit(): void {
-    this.onGetClaimTravel();
+    this.onGetClaimPA();
+    this.searchLive();
   }
 
-  onGetClaimTravel(){
+  onGetClaimPA() {
     this.isLoading = true;
-    this.submissionService.getClaimTravel(this.page, this.size)
+    this.submissionService.getClaimPA(this.page, this.size)
       .subscribe(data => {
         this.loadedPosts = data.content;
         this.totalItems = data.totalElements;
@@ -51,48 +53,60 @@ export class ClaimTravelComponent implements OnInit {
       });
   }
 
-  onPageChange(event){
+  onPageChange(event) {
     this.page = event;
-    this.onGetClaimTravel();
+    this.onGetClaimPA();
   }
 
-
-  rejectedClaimTravel(id){
-    localStorage.setItem('claimTaIdReject', id);
+  onSendClaimPA(claimpa, id) {
+    this.submissionService.checkerClaimPA(claimpa, id)
+      .subscribe(data => {
+        this.isLoadingApprove = false;
+        Swal.fire('Success',
+          'Klaim berhasil di teruskan untuk proses persetujuan',
+          'success');
+        window.location.reload();
+      }, error => {
+        this.isLoadingApprove = false;
+        Swal.fire('Gagal!',
+          'Gagal',
+          'error');
+        window.location.reload();
+      });
   }
 
-  onSendClaimTravel(claimTravel){
-    localStorage.setItem('claimTravel', JSON.stringify(claimTravel));
+  rejectedClaimPA(id) {
+    localStorage.setItem('claimPaIdReject', id);
   }
 
-  onApproved(valueClaim){
-    this.travel = JSON.parse(localStorage.getItem('claimTravel'));
+  onApproved(valueClaim) {
+    this.pa = JSON.parse(localStorage.getItem('claimPA'));
     this.isLoadingApprove = true;
-    this.claimTravel = {
-      id: this.travel.id,
-      name: this.travel.name,
-      email: this.travel.email,
-      reportDate: this.travel.reportDate,
-      incidentDate: this.travel.incidentDate,
-      lossCause: this.travel.lossCause,
-      incidentLocation: this.travel.incidentLocation,
-      medicalCertificate: this.travel.medicalCertificate,
-      medicalCertificateUri: this.travel.medicalExpensesUri,
-      medicalExpenses: this.travel.medicalExpenses,
-      medicalExpensesUri: this.travel.medicalExpensesUri,
-      deathCertificate: this.travel.deathCertificate,
-      deathCertificateUri: this.travel.deathCertificateUri,
-      claimSubmission: this.travel.claimSubmission,
-      claimApproval: valueClaim
+    this.claimPA = {
+      id: this.pa.id,
+      name: this.pa.name,
+      email: this.pa.email,
+      reportDate: this.pa.reportDate,
+      incidentDate: this.pa.incidentDate,
+      lossCause: this.pa.lossCause,
+      incidentLocation: this.pa.incidentLocation,
+      claimSubmission: this.pa.claimSubmission,
+      claimApproval: valueClaim,
+      medicalCertificate: this.pa.medicalCertificate,
+      medicalCertificateUri: this.pa.medicalCertificateUri,
+      medicalExpenses: this.pa.medicalExpenses,
+      medicalExpensesUri: this.pa.medicalExpensesUri,
+      deathCertificate: this.pa.deathCertificate,
+      deathCertificateUri: this.pa.deathCertificateUri
     };
-    // console.log('ini travid', this.travel.id);
-    this.submissionService.approvalClaimTravel(this.travel.id, this.claimTravel)
+    this.submissionService.approvalClaimPA(this.pa.id, this.claimPA)
       .subscribe(data => {
         this.isLoadingApprove = false;
         Swal.fire('Success',
           'Klaim berhasil di setujui',
           'success');
         window.location.reload();
+        valueClaim = 0;
       }, error => {
         this.isLoadingApprove = false;
         Swal.fire('Gagal!',
@@ -100,11 +114,12 @@ export class ClaimTravelComponent implements OnInit {
           'error');
         window.location.reload();
       });
+
   }
+
   onReject(valueDescription: string) {
-    this.claimRejectIdTravel = localStorage.getItem('claimTaIdReject');
     this.isLoadingReject = true;
-    this.submissionService.rejectedClaimTravel(this.claimRejectIdTravel, valueDescription)
+    this.submissionService.rejectedClaimPA(localStorage.getItem('claimPaIdReject'), valueDescription)
       .subscribe( data => {
         this.isLoadingReject = false;
         Swal.fire('Success',
@@ -120,8 +135,8 @@ export class ClaimTravelComponent implements OnInit {
       });
   }
 
-  downloadMedCertTravel(filename){
-    this.submissionService.getMedicalCertificateTravel(filename).subscribe((response) => {
+  downloadMedCertPA(filename){
+    this.submissionService.getMedicalCertificatePA(filename).subscribe((response) => {
       Swal.fire('Success',
         'Surat Keterangan Dokter Berhasil di Download',
         'success');
@@ -129,17 +144,16 @@ export class ClaimTravelComponent implements OnInit {
       Swal.fire('Gagal',
         'Gagal Mendownload',
         'error');
-
     });
   }
 
-  downloadDeathCertTravel(filename){
+  downloadDeathCertPA(filename){
     if (filename === null){
       Swal.fire('Failed',
         'User tidak melampirkan file',
         'error');
     } else {
-      this.submissionService.getDeathCertificateTravel(filename).subscribe((response) => {
+      this.submissionService.getDeathCertificatePA(filename).subscribe((response) => {
         Swal.fire('Success',
           'Surat Kematian Berhasil di Download',
           'success');
@@ -149,10 +163,11 @@ export class ClaimTravelComponent implements OnInit {
           'error');
       });
     }
+
   }
 
-  downloadMedExpTravel(filename){
-    this.submissionService.getMedicalExpensesTravel(filename).subscribe((response) => {
+  downloadMedExpPA(filename){
+    this.submissionService.getMedicalExpensesPA(filename).subscribe((response) => {
       Swal.fire('Success',
         'Rincian Biaya Pengobatan Berhasil di Download',
         'success');
@@ -163,14 +178,12 @@ export class ClaimTravelComponent implements OnInit {
     });
   }
 
-  onGetClaimTravelList(){
-    this.isLoading = true;
-    this.adminService.getClaimTravel()
+  onGetClaimPAList(){
+    this.adminService.getClaimPA()
       .subscribe(data => {
-        for (const claimTravel of data) {
-          this.isLoading = false;
-          if (claimTravel.transaction.transactionTravel.statusClaim === 'Proses Persetujuan'){
-            this.numberClaimTravel += 1;
+        for (const claimPA of data) {
+          if (claimPA.transaction.transactionPA.statusClaim === 'Proses Persetujuan'){
+            this.numberClaimPA += 1;
           }
         }
       }, error => {
@@ -178,21 +191,21 @@ export class ClaimTravelComponent implements OnInit {
       });
   }
 
-  // tslint:disable-next-line:typedef
+
   searchLive() {
     if (this.searchByName === ''){
       this.isSearch = false;
     }else{
       this.isSearch = true;
     }
-    this.adminService.getClaimTravel()
+    this.adminService.getClaimPA()
       .subscribe((response) => {
-        this.claimTravelList = JSON.stringify(response);
+        this.claimPAList = JSON.stringify(response);
         if (this.newData !== []) {
           this.newData = [];
         }
-        for (const claim of JSON.parse(this.claimTravelList)) {
-          if (claim.transaction.transactionTravel.id.toLowerCase().indexOf(this.searchByName.toLowerCase()) > -1) {
+        for (const claim of JSON.parse(this.claimPAList)) {
+          if (claim.transaction.transactionPA.trxpaId.toLowerCase().indexOf(this.searchByName.toLowerCase()) > -1) {
             this.newData.push(claim);
           }
         }
@@ -201,7 +214,7 @@ export class ClaimTravelComponent implements OnInit {
       });
   }
 
-  // tslint:disable-next-line:typedef
+
   exportexcel() {
     /* table id is passed over here */
     const element = document.getElementById('excel-table');
@@ -213,6 +226,10 @@ export class ClaimTravelComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, this.fileName);
-
+    Swal.fire('Sukses',
+      'Berhasil mendownload yang dibutuhlkan',
+      'success');
   }
+
+
 }

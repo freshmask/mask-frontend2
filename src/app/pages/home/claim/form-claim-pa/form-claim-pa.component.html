@@ -3,20 +3,21 @@
 
     <div class="logo mr-auto">
       <!--      <h1 class="text-light"><a href="index.html">M-ASK</a></h1>-->
-      <a href="index.html"><img src="assets/img/homepage/logo%20mask%20putih.png" alt="" class="img-fluid"></a>
+      <a href="index.html"><img src="assets/img/homepage/logo%20mask.png" alt="" class="img-fluid"></a>
     </div>
 
     <nav class="nav-menu navbar-expand-lg d-lg-block">
-      <button style="border-color: #e67e22" class="navbar-toggler navbar-toggler-right navbar-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <button style="border-color: #e67e22" class="navbar-toggler navbar-toggler-right navbar-light" type="button"
+              data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+              aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon "></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li><a href="">Home</a></li>
-          <li class="drop-down"><a href="">Claim</a>
+          <li class="drop-down"><a href="">Klaim</a>
             <ul>
               <li><a routerLink="../pas">Asuransi Kecelakaan Diri</a></li>
-              <li><a routerLink="../pars">Asuransi Properti/ Harta Benda</a></li>
               <li><a routerLink="../travels">Asuransi Perjalanan</a></li>
             </ul>
           </li>
@@ -28,120 +29,165 @@
   </div>
 </header><!-- End Header -->
 <div>
-<div class="main">
+  <div class="main">
 
-  <!-- Sign up form -->
-  <section class="signup">
-    <div class="containers">
-      <div class="signup-content">
-        <div class="signup-form">
-          <h2 class="form-title">Klaim Kecelakaan Diri</h2>
-          <form method="POST" class="register-form" id="register-form">
-            <div class="form-group">
-              <label for="idtransaksi"><i class="zmdi zmdi-account material-icons-name"></i></label>
-              <input type="text" name="idtransaksi" id="idtransaksi" placeholder="Nomor Polis"/>
-            </div>
-            <div class="form-group">
-              <label for="idtransaksi"><i class="zmdi zmdi-account material-icons-name"></i>Upload Ktp</label>
-              <form action="/action_page.php">
-                <input type="file" id="filektp" name="filename">
-                <!--                <input type="submit">-->
-              </form>
-            </div>
-            <div class="form-group">
-              <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-              <input type="text" name="name" id="name" placeholder="Nama Lengkap"/>
-            </div>
-            <div class="form-group">
-              <label for="email"><i class="zmdi zmdi-email"></i></label>
-              <input type="email" name="email" id="email" placeholder="Email"/>
-            </div>
-            <div class="form-group">
-              <label for="insiden"><i class="zmdi zmdi-lock"></i>Tanggal Insiden : </label>
-              <br>
-              <input type="date" name="insiden" id="insiden" placeholder="Tanggal Insiden"/>
-            </div>
-            <div class="form-group">
-              <select class="form-control" formControlName="Penyebab Kerugian">
-                <option>Kematian</option>
-                <option>Bukan Kematian</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="lokasiKejadian"><i class="zmdi zmdi-lock"></i></label>
-              <input type="text" name="insiden" id="lokasiKejadian" placeholder="Lokasi Kejadian"/>
-            </div>
-            <div class="form-group">
-              <label for="nominalKlaim"><i class="zmdi zmdi-lock"></i></label>
-              <input type="text" name="nominalKlaim" id="nominalKlaim" placeholder="Nominal Pengajuan Klaim"/>
-            </div>
-            <div class="form-group">
-              <form action="/action_page.php">
-                <input type="file" id="myFile" name="filename">
-<!--                <input type="submit">-->
-              </form>
-            </div>
-
-
-            <div class="form-group">
-              <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-              <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
-            </div>
-            <div class="form-group form-button">
-              <input type="submit" name="signup" id="signup" class="form-submit" value="Ajukan Klaim"/>
-            </div>
-          </form>
+    <!-- Sign up form -->
+    <section style="margin-top: -100px"  class="signup">
+      <div  class="containers">
+        <div class="section-title" data-aos="zoom-out">
+          <h2>PENGAJUAN KLAIM</h2>
+          <p>ASURANSI KECELAKAAN DIRI</p>
         </div>
-        <div class="signup-image">
-          <figure><img src="../../../../../assets/img/homepage/personalAccident.jpg" alt="sing up image"></figure>
-<!--          <a href="#" class="signup-image-link">I am already member</a>-->
+        <div style="margin-top: -100px" class="signup-content">
+          <div class="signup-form">
+            <form [formGroup]="claimPaForm" method="POST" (ngSubmit)="addClaimPa(claimPaForm.value, claimPaForm.valid)"
+                  class="register-form" id="register-form">
+              <div class="form-group">
+                <label for="polisId"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <p style="color: #0E1119">Nomor Polis : </p>
+                <input formControlName="polisId" type="text" name="polisId" id="polisId" placeholder="Nomor Polis"
+                       class="form-control" [(ngModel)]="polisID"/>
+                <div class="row ml-2">
+                  <small *ngIf="form('polisId').invalid && (form('polisId').dirty || (form('polisId').touched))"
+                         class="text text-danger float-left">
+                    <div *ngIf="form('polisId').errors?.required">
+                      Nomor polis harus di isi
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div>
+            <a type="submit" class="cta-btn align-middle" style="float:right; margin-top: -20px;" (click)="onGetCustomerPAByPolisId(polisID)" >Cek</a>
+            </div>
+
+
+              <div class="form-group" style="margin-top: 60px;">
+                <p style="color: #0E1119">Nomor Identitas : </p>
+                <a class="text-custom" *ngIf="customerPA===undefined"> </a>
+                <a class="text-custom" *ngIf="customerPA!==undefined">{{customerPA.identityNo}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Nama Tertanggung : </p>
+                <a class="text-custom" *ngIf="customerPA===undefined"> </a>
+                <a class="text-custom" *ngIf="customerPA!==undefined">{{customerPA.name}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Email Tertanggung : </p>
+                <a class="text-custom" *ngIf="customerPA===undefined"> </a>
+                <a class="text-custom" *ngIf="customerPA!==undefined">{{customerPA.email}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Nama Ahli Waris : </p>
+                <a class="text-custom" *ngIf="customerPA===undefined"> </a>
+                <a class="text-custom" *ngIf="customerPA!==undefined">{{customerPA.heirName}}</a>
+              </div>
+              <div class="form-group">
+                <p style="color: #0E1119">Email Ahli Waris : </p>
+                <a class="text-custom" *ngIf="customerPA===undefined"> </a>
+                <a class="text-custom" *ngIf="customerPA!==undefined">{{customerPA.heirEmail}}</a>
+              </div>
+
+              <div class="form-group">
+                <p style="color: #0E1119" for="incidentDate">Tanggal Kejadian : </p>
+                <br>
+                <input type="date" formControlName="incidentDate" class="form-control" name="incidentDate" id="incidentDate" placeholder="Tanggal Insiden"/>
+                <div class="row ml-2">
+                  <small
+                    *ngIf="form('incidentDate').invalid && (form('incidentDate').dirty || (form('incidentDate').touched))"
+                    class="text text-danger float-left">
+                    <div *ngIf="form('incidentDate').errors?.required">
+                      Tanggal Insiden harus di isi
+                    </div>
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <p style="color: #0E1119">Penyebab Kerugian : </p>
+                <!--                <label style="margin: 0px">Penyebab Kerugian</label>-->
+                <select class="form-control" formControlName="lossCause">
+                  <option>Kematian</option>
+                  <option>Lengan kanan mulai dari sendi bahu</option>
+                  <option>Lengan kiri mulai dari sendi bahu</option>
+                  <option>Lengan kanan mulai dari atasnya sendi siku</option>
+                  <option>Lengan kiri mulai dari atasnya sendi siku</option>
+                  <option>Tangan kanan mulai dari atasanya pergelangan</option>
+                  <option>Tangan kiri mulai dari atasnya pergelangan</option>
+                  <option>Satu kaki mulai dari lutut sampai pangkal paha</option>
+                  <option>Satu kaki mulai dari mata kaki sampai lutut</option>
+                  <option>Ibujari tangan kanan</option>
+                  <option>Ibujari tangan kiri</option>
+                  <option>Jari telunjuk tangan kanan</option>
+                  <option>Jari telunjuk tangan kiri</option>
+                  <option>Jari kelingking tangan kanan</option>
+                  <option>Jari kelingking tangan kiri</option>
+                  <option>Jari tengah atau manis tangan kanan</option>
+                  <option>Jari tengah atau manis tangan kiri</option>
+                  <option>Satu ibu jari kaki</option>
+                  <option>Satu jari kaki lainnya</option>
+                  <option>Sebelah mata</option>
+                  <option>Pendengaran pada kedua belah telinga</option>
+                  <option>Pendengaran pada sebelah telinga</option>
+                  <option>Sebelah daun telinga secara keseluruhan</option>
+
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="incidentLocation"><i class="zmdi zmdi-lock"></i></label>
+                <input formControlName="incidentLocation" class="form-control" type="text" name="incidentLocation" id="incidentLocation" placeholder="Lokasi Kejadian"/>
+              </div>
+              <div class="form-group">
+                <label for="claimSubmission"><i class="zmdi zmdi-lock"></i></label>
+                <input formControlName="claimSubmission" class="form-control" type="text" name="claimSubmission"
+                       id="claimSubmission" placeholder="Nominal Pengajuan Klaim"/>
+              </div>
+
+              <div class="form-group">
+                <label htmlFor='image' for="medicalCertificate"><i class="zmdi zmdi-lock"></i>Upload Surat Keterangan Dokter
+                </label>
+                <input #imageInput class="form-control" style="margin-bottom: 10px; margin-top: 20px" type="file" accept="application/*"
+                       (change)="processFileMC(imageInput)" id="medicalCertificate"/>
+                <!--                       value={this.state.image}-->
+              </div>
+              <div class="form-group">
+                <label style="width: 100%" for="deathCertificate"><i class="zmdi zmdi-lock"></i>Upload Surat Kematian
+                  (Jika Ada)
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px;" #imageInput type="file" accept="application/*"
+                       (change)="processFileDC(imageInput)" class="form-control" id="deathCertificate">
+              </div>
+              <div class="form-group">
+                <label for="medicalExpenses"><i class="zmdi zmdi-lock"></i>Upload Biaya Pengobatan/Dokumen terkait
+                </label>
+                <input style="margin-bottom: 10px; margin-top: 20px" #imageInput type="file" accept="application/*"
+                       (change)="processFileME(imageInput)" class="form-control" id="medicalExpenses">
+              </div>
+
+
+              <!--              <div class="form-group">-->
+              <!--                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"/>-->
+              <!--                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a-->
+              <!--                  href="#" class="term-service">Terms of service</a></label>-->
+              <!--              </div>-->
+              <div class="form-group form-button">
+                <input type="submit" name="signup" id="signup" class="form-submit" value="Ajukan Klaim"
+                       [disabled]="claimPaForm.invalid"
+                />
+              </div>
+
+            </form>
+          </div>
+          <div class="signup-image">
+            <figure style="margin-top: 100px"><img src="../../../../../assets/img/homepage/personalAccident.jpg"
+                                                   alt="sing up image"></figure>
+            <!--          <a href="#" class="signup-image-link">I am already member</a>-->
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-<!--  &lt;!&ndash; Sing in  Form &ndash;&gt;-->
-<!--  <section class="sign-in">-->
-<!--    <div class="container">-->
-<!--      <div class="signin-content">-->
-<!--        <div class="signin-image">-->
-<!--          <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>-->
-<!--          <a href="#" class="signup-image-link">Create an account</a>-->
-<!--        </div>-->
-
-<!--        <div class="signin-form">-->
-<!--          <h2 class="form-title">Sign up</h2>-->
-<!--          <form method="POST" class="register-form" id="login-form">-->
-<!--            <div class="form-group">-->
-<!--              <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>-->
-<!--              <input type="text" name="your_name" id="your_name" placeholder="Your Name"/>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>-->
-<!--              <input type="password" name="your_pass" id="your_pass" placeholder="Password"/>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />-->
-<!--              <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>-->
-<!--            </div>-->
-<!--            <div class="form-group form-button">-->
-<!--              <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--          <div class="social-login">-->
-<!--            <span class="social-label">Or login with</span>-->
-<!--            <ul class="socials">-->
-<!--              <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>-->
-<!--              <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>-->
-<!--              <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
-
-</div>
+  </div>
 </div>
 
 

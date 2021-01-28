@@ -2,6 +2,7 @@ import {transactionPA} from './transactionPA.model';
 
 export interface CustomerPA{
   customerpaId: string;
+  name: string;
   identityNo: string;
   identityType: string;
   phoneNumber: string;

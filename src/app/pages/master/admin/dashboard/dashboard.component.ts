@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   sumAllTrans: number;
   sumAllClaim: number;
 
+
   transsPa = parseInt(localStorage.getItem('pa'));
   transsTa = parseInt(localStorage.getItem('travel'));
   transsParr = parseInt(localStorage.getItem('par'));
@@ -60,7 +61,7 @@ export class DashboardComponent implements OnInit {
     this.onGetClaimPAR();
     this.onGetClaimTravel();
     this.onGetUserByRole();
-    this.sumAllTrans = this.transsPa + this.transsParr + this.transsTa;
+    this.sumAllTrans = parseInt(localStorage.getItem('pa')) + parseInt(localStorage.getItem('par')) + parseInt(localStorage.getItem('travel'));
     this.sumAllClaim = this.claimssPa + this.claimssPAR + this.claimssTrav;
 
 

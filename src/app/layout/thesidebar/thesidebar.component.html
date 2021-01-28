@@ -80,7 +80,13 @@
       <a routerLink="/admin/dashboard" class="bg-light list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span ><i class="fa fa-bell mr-3" aria-hidden="true"></i></span>
-          <span class="menu-collapsed">Notif Klaim <span class="badge badge-pill badge-warning ml-2">{{totalNumberClaim}}</span></span>
+          <span class="menu-collapsed">Klaim Check<span class="badge badge-pill badge-warning ml-2">{{totalNumberClaim}}</span></span>
+        </div>
+      </a>
+      <a routerLink="/admin/dashboard" class="bg-light list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span ><i class="fa fa-bell mr-3" aria-hidden="true"></i></span>
+          <span class="menu-collapsed">Klaim Approval<span class="badge badge-pill badge-warning ml-2">{{totalNumberClaimApp}}</span></span>
         </div>
       </a>
       <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
@@ -166,24 +172,45 @@
         </a>
       </div>
 
+
+      <a href="#submenu6" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-newspaper-o fa-fw mr-3"></span>
+          <span class="menu-collapsed">Pengecekan Klaim</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu6' class="collapse sidebar-submenu">
+        <a (click)="toClaimPARCek()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Klaim Properti<span class="badge badge-pill badge-warning ml-2">{{numberClaimPAR}}</span></span>
+        </a>
+        <a (click)="toClaimPACek()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Klaim Kecelakaan Diri<span class="badge badge-pill badge-warning ml-2">{{numberClaimPA}}</span></span>
+        </a>
+        <a (click)="toClaimTravelCek()" class="list-group-item list-group-item-action bg-light text-white">
+          <span class="menu-collapsed">Klaim Perjalanan<span class="badge badge-pill badge-warning ml-2">{{numberClaimTravel}}</span></span>
+        </a>
+      </div>
+
       <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-newspaper-o fa-fw mr-3"></span>
-          <span class="menu-collapsed">Klaim</span>
+          <span class="menu-collapsed">Persetujuan Klaim</span>
           <span class="submenu-icon ml-auto"></span>
         </div>
       </a>
       <div id='submenu5' class="collapse sidebar-submenu">
         <a (click)="toClaimPAR()" class="list-group-item list-group-item-action bg-light text-white">
-          <span class="menu-collapsed">Klaim Properti<span class="badge badge-pill badge-warning ml-2">{{numberClaimPAR}}</span></span>
+          <span class="menu-collapsed">Klaim Properti<span class="badge badge-pill badge-warning ml-2">{{numberClaimPARAprov}}</span></span>
         </a>
         <a (click)="toClaimPA()" class="list-group-item list-group-item-action bg-light text-white">
-          <span class="menu-collapsed">Klaim Kecelakaan Diri<span class="badge badge-pill badge-warning ml-2">{{numberClaimPA}}</span></span>
+          <span class="menu-collapsed">Klaim Kecelakaan Diri<span class="badge badge-pill badge-warning ml-2">{{numberClaimPAAprov}}</span></span>
         </a>
         <a (click)="toClaimTravel()" class="list-group-item list-group-item-action bg-light text-white">
-          <span class="menu-collapsed">Klaim Perjalanan<span class="badge badge-pill badge-warning ml-2">{{numberClaimTravel}}</span></span>
+          <span class="menu-collapsed">Klaim Perjalanan<span class="badge badge-pill badge-warning ml-2">{{numberClaimTravelAprov}}</span></span>
         </a>
       </div>
+
       <!-- Separator without title -->
 <!--      <li class="list-group-item sidebar-separator menu-collapsed"></li>-->
       <!-- /END Separator -->

@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   errorPassword: string;
   passwordFirst: string;
   passwordSecond: string;
+  admin: string;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
   private buildForm(): void {
     this.registerForm = new FormGroup({
       id: new FormControl(null),
-      role: new FormControl('02'),
+      role: new FormControl(null, [Validators.required]),
       isActive: new FormControl('false'),
       idCardNo: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(16), Validators.minLength(14)]),
       password: new FormControl(null, [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)]),
@@ -58,6 +59,15 @@ export class RegisterComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addUser(userData) {
+    // tslint:disable-next-line:triple-equals
+    if (userData.role == 'Admin'){
+      // tslint:disable-next-line:no-unused-expression
+      userData.role = '02';
+      // tslint:disable-next-line:triple-equals
+    }else if ( userData.role == 'Checker'){
+      // tslint:disable-next-line:no-unused-expression
+      userData.role = '04';
+    }
     this.authService.createUser(userData).subscribe(response => {
       Swal.fire('Success',
         'Berhasil Mendaftar',

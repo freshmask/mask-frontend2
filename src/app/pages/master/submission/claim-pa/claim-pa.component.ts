@@ -73,24 +73,40 @@ export class ClaimPaComponent implements OnInit {
 
   onApproved(valueClaim) {
     this.isLoadingApprove = true;
+    // this.claimPA = {
+    //   id: this.pa.id,
+    //   name: this.pa.name,
+    //   email: this.pa.email,
+    //   reportDate: this.pa.reportDate,
+    //   incidentDate: this.pa.incidentDate,
+    //   lossCause: this.pa.lossCause,
+    //   incidentLocation: this.pa.incidentLocation,
+    //   claimSubmission: this.pa.claimSubmission,
+    //   claimApproval: valueClaim,
+    //   medicalCertificate: this.pa.medicalCertificate,
+    //   medicalCertificateUri: this.pa.medicalCertificateUri,
+    //   medicalExpenses: this.pa.medicalExpenses,
+    //   medicalExpensesUri: this.pa.medicalExpensesUri,
+    //   deathCertificate: this.pa.deathCertificate,
+    //   deathCertificateUri: this.pa.deathCertificateUri
+    // };
     this.claimPA = {
-      id: this.pa.id,
-      name: this.pa.name,
-      email: this.pa.email,
-      reportDate: this.pa.reportDate,
-      incidentDate: this.pa.incidentDate,
-      lossCause: this.pa.lossCause,
-      incidentLocation: this.pa.incidentLocation,
-      claimSubmission: this.pa.claimSubmission,
+      id: JSON.parse(localStorage.getItem('claimPA')).id,
+      name: JSON.parse(localStorage.getItem('claimPA')).name,
+      email: JSON.parse(localStorage.getItem('claimPA')).email,
+      reportDate: JSON.parse(localStorage.getItem('claimPA')).reportDate,
+      incidentDate: JSON.parse(localStorage.getItem('claimPA')).incidentDate,
+      lossCause: JSON.parse(localStorage.getItem('claimPA')).lossCause,
+      incidentLocation: JSON.parse(localStorage.getItem('claimPA')).incidentLocation,
+      claimSubmission: JSON.parse(localStorage.getItem('claimPA')).claimSubmission,
       claimApproval: valueClaim,
-      medicalCertificate: this.pa.medicalCertificate,
-      medicalCertificateUri: this.pa.medicalCertificateUri,
-      medicalExpenses: this.pa.medicalExpenses,
-      medicalExpensesUri: this.pa.medicalExpensesUri,
-      deathCertificate: this.pa.deathCertificate,
-      deathCertificateUri: this.pa.deathCertificateUri
+      medicalCertificate: JSON.parse(localStorage.getItem('claimPA')).medicalCertificate,
+      medicalCertificateUri: JSON.parse(localStorage.getItem('claimPA')).medicalCertificateUri,
+      medicalExpenses: JSON.parse(localStorage.getItem('claimPA')).medicalExpenses,
+      medicalExpensesUri: JSON.parse(localStorage.getItem('claimPA')).medicalExpensesUri,
+      deathCertificate: JSON.parse(localStorage.getItem('claimPA')).deathCertificate,
+      deathCertificateUri: JSON.parse(localStorage.getItem('claimPA')).deathCertificateUri
     };
-    // console.log('ini pa id', this.pa.id);
     this.submissionService.approvalClaimPA(this.pa.id, this.claimPA)
       .subscribe(data => {
         this.isLoadingApprove = false;
@@ -111,7 +127,7 @@ export class ClaimPaComponent implements OnInit {
 
   onReject(valueDescription: string) {
     this.isLoadingReject = true;
-    this.submissionService.rejectedClaimPA(this.claimRejectIdPa, valueDescription)
+    this.submissionService.rejectedClaimPA(localStorage.getItem('claimPaIdReject'), valueDescription)
       .subscribe( data => {
         this.isLoadingReject = false;
         Swal.fire('Success',

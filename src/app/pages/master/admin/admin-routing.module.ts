@@ -5,6 +5,7 @@ import {ListAdminComponent} from './list-admin/list-admin.component';
 import {ProfilAdminComponent} from './profil-admin/profil-admin.component';
 import {FormChangePasswordComponent} from './form-change-password/form-change-password.component';
 import {AuthGuardService} from '../auth-guard.service';
+import {AuthGuardSubmissionService} from '../auth-guard-submission.service';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, AuthGuardSubmissionService],
     component: ListAdminComponent
   },
   {

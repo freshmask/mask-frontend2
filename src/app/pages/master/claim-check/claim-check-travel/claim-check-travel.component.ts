@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {SubmissionService} from '../submission.service';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from '@angular/core';
 import {ClaimTravel} from '../../transaction/transaction-model/ClaimTravel.model';
+import {SubmissionService} from '../../submission/submission.service';
 import {AdminService} from '../../admin/admin.service';
+import Swal from "sweetalert2";
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-claim-travel',
-  templateUrl: './claim-travel.component.html',
-  styleUrls: ['./claim-travel.component.css']
+  selector: 'app-claim-check-travel',
+  templateUrl: './claim-check-travel.component.html',
+  styleUrls: ['./claim-check-travel.component.css']
 })
-export class ClaimTravelComponent implements OnInit {
+export class ClaimCheckTravelComponent implements OnInit {
   page = 1;
   size = 5;
   totalItems;
@@ -61,8 +61,22 @@ export class ClaimTravelComponent implements OnInit {
     localStorage.setItem('claimTaIdReject', id);
   }
 
-  onSendClaimTravel(claimTravel){
-    localStorage.setItem('claimTravel', JSON.stringify(claimTravel));
+  onSendClaimTravel(claimTravel, id){
+    console.log('id', id);
+    this.submissionService.checkerClaimTravel(claimTravel, id)
+      .subscribe(data => {
+        this.isLoadingApprove = false;
+        Swal.fire('Success',
+          'Klaim berhasil di teruskan untuk proses persetujuan',
+          'success');
+        window.location.reload();
+      }, error => {
+        this.isLoadingApprove = false;
+        Swal.fire('Gagal!',
+          'Gagal',
+          'error');
+        // window.location.reload();
+      });
   }
 
   onApproved(valueClaim){
@@ -215,4 +229,5 @@ export class ClaimTravelComponent implements OnInit {
     XLSX.writeFile(wb, this.fileName);
 
   }
+
 }

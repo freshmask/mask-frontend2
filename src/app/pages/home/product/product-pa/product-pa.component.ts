@@ -19,7 +19,7 @@ export class ProductPaComponent implements OnInit {
   constructor(private categoryPAService: CategoryPAService, private route: Router) { }
 
   ngOnInit(): void {
-    // this.onGetCategoryPA(this.tempId);
+    this.onGetCategoryPA(localStorage.getItem('packagePAId'));
     this.onGetPackagePA();
   }
 

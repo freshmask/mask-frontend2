@@ -7,6 +7,10 @@ import {ClaimPAR} from '../transaction/transaction-model/ClaimPAR.model';
 import {PackageTravelModel} from '../../home/model/packageTravel.model';
 import {ClaimPA} from '../transaction/transaction-model/ClaimPA.model';
 import {ClaimTravel} from '../transaction/transaction-model/ClaimTravel.model';
+import {ClaimsPA} from '../../home/claim/form-claim-pa/ClaimsPA.model';
+import {ClaimsTravel} from '../../home/claim/form-claim-travel/ClaimsTravel.model';
+import {CustomerPA} from '../transaction/transaction-model/CustomerPA.model';
+import {CustomerTravel} from '../transaction/transaction-model/CustomerTravel.model';
 
 @Injectable({
   providedIn: 'root'
@@ -310,4 +314,126 @@ export class SubmissionService {
     });
   }
 
+  createClaimPA(loadData: ClaimsPA) {
+    // const headers = {
+    //   'Content-Type' : 'multipart/form-data'
+    // };
+    const formData = new FormData();
+    for (const key in loadData){
+      formData.append(key, loadData[key]);
+    }
+    return new Observable((observer) => {
+      this.http.post(`api/claimpaByHeir`, formData, { responseType: 'text'})
+        .subscribe((response: any) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
+
+  createClaimTravel(claimData: any): Observable<any> {
+    // const headers = {
+    //   'Content-Type' : 'multipart/form-data'
+    // };
+    const formData = new FormData();
+    for (const key in claimData){
+      formData.append(key, claimData[key]);
+    }
+
+    // const formData = new FormData();
+    // formData.append('nameOfTheInsured', claimData.nameOfTheInsured);
+    // formData.append('emailOfTheInsured', claimData.emailOfTheInsured);
+    // formData.append('identityNumber', claimData.identityNumber);
+    // formData.append('heirName', claimData.heirName);
+    // formData.append('heirEmail', claimData.heirEmail);
+    // formData.append('reportDate', claimData.reportDate);
+    // formData.append('incidentDate', `${claimData.incidentDate}`);
+    // formData.append('lossCause', claimData.lossCause);
+    // formData.append('incidentLocation', claimData.incidentLocation);
+    // formData.append('claimSubmission', `${claimData.claimSubmission}`);
+    // formData.append('claimApproval', '0');
+    // formData.append('polisId', claimData.polisId);
+    // if (claimData.medicalCertificate){
+    //   // const medicalCertificate = payload.medicalDoc.split('/').pop()
+    //   // const typeFile = medicalCertificate.split(".").pop()
+    //   // formData.append('medicalCertificate', {uri: claimData.medicalCertificate, name: 'medicalCertificate', type: 'application/pdf'});
+    //   formData.append('medicalCertificate', claimData.medicalCertificate);
+    // }
+    // if (claimData.medicalExpenses){
+    //   // const medicalExpenses = payload.treatmentDoc.split('/').pop()
+    //   // const typeFile = medicalExpenses.split(".").pop()
+    //   // formData.append('medicalExpenses', {uri: claimData.medicalExpenses, name: 'medicalExpenses', type: 'application/pdf'});
+    //   formData.append('medicalExpenses', claimData.medicalExpenses);
+    // }
+    // if (claimData.deathCertificate){
+    //   // const deathCertificate = payload.deathDoc.split('/').pop()
+    //   // const typeFile = deathCertificate.split(".").pop()
+    //   // formData.append('deathCertificate', { uri: claimData.deathCertificateUri, name: 'deathCertificate', type: 'application/pdf'});
+    //   formData.append('deathCertificate', claimData.deathCertificate);
+    // }
+    return new Observable((observer) => {
+      this.http.post(`api/claimtravelByHeir`, formData, { responseType: 'text'})
+        .subscribe((response: any) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
+
+  checkerClaimPA(claimpa, id): Observable<ClaimPA[]> {
+    return new Observable((observer: Observer<ClaimPA[]>) => {
+      this.http.put(`/api/reviewPA/${id}/?access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, claimpa)
+        .subscribe((response: ClaimPA[]) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
+
+  checkerClaimPAR(claimpar, id): Observable<ClaimPAR> {
+    return new Observable((observer: Observer<ClaimPAR>) => {
+      this.http.put(`api/reviewPAR/${id}?access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, claimpar)
+        .subscribe((response: ClaimPAR) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
+
+  checkerClaimTravel(claimTravel, id): Observable<ClaimTravel[]> {
+    return new Observable((observer: Observer<ClaimTravel[]>) => {
+      this.http.put(`/api/reviewTravel/${id}/?access_token=` + JSON.parse(window.sessionStorage.getItem('token')).access_token, claimTravel)
+        .subscribe((response: ClaimTravel[]) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getCustomerPAbyPolisId(id): Observable<CustomerPA> {
+    return new Observable((observer: Observer<CustomerPA>) => {
+      this.http.get(`/api/customerPAByPolis/${id}`)
+        .subscribe((response: CustomerPA) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getCustomerTravelbyPolisId(id): Observable<CustomerTravel> {
+    return new Observable((observer: Observer<CustomerTravel>) => {
+      this.http.get(`/api/customerTravelByPolis/${id}`)
+        .subscribe((response: CustomerTravel) => {
+          observer.next(response);
+        }, error => {
+          observer.error(error);
+        });
+    });
+  }
 }

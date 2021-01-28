@@ -1,0 +1,66 @@
+.container{
+  margin-top: -860px;
+  width: 78%;
+  margin-left: 280px;
+  height: 80%;
+  padding: 20px;
+  border-radius: 10px;
+  margin-right: 30%;
+
+
+}
+h4{
+  color: #EF8526;
+  text-align: center;
+  /*margin-bottom: 10px;*/
+}
+td{
+  font-size: 12px;
+}
+
+
+@media screen and (max-width: 800px){
+  .container{
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 100%;
+  }
+  .container .table-responsive{
+    width: 700px;
+  }
+}
+
+
+.section-title {
+  padding-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0;
+  line-height: 1px;
+  margin: 0 0 5px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #aaaaaa;
+  font-family: "Poppins", sans-serif;
+}
+
+.section-title h2::after {
+  content: "";
+  width: 120px;
+  height: 1px;
+  display: inline-block;
+  background: #fd9042;
+  margin: 4px 10px;
+}
+
+.section-title h5 {
+  margin: 0;
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  color: #EF8526;
+}

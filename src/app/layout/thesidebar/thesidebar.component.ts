@@ -19,6 +19,10 @@ export class ThesidebarComponent implements OnInit {
   token = window.sessionStorage.getItem('token');
   x = JSON.parse(this.token);
   name = this.x.user.name;
+  totalNumberClaimApp = 0;
+  numberClaimPAAprov = 0;
+  numberClaimTravelAprov = 0;
+  numberClaimPARAprov = 0;
 
   constructor(private authService: AuthService, private router: Router,
               private adminService: AdminService) { }
@@ -26,6 +30,9 @@ export class ThesidebarComponent implements OnInit {
     this.onGetClaimPA();
     this.onGetClaimPAR();
     this.onGetClaimTravel();
+    this.onGetClaimPAApprov();
+    this.onGetClaimPARApprov();
+    this.onGetClaimTravelApprov();
   }
 
   // tslint:disable-next-line:typedef
@@ -107,6 +114,18 @@ export class ThesidebarComponent implements OnInit {
     this.router.navigate(['/admin/submission/claim-travel']);
   }
 
+  toClaimPACek() {
+    this.router.navigate(['/admin/claim-check/pa']);
+  }
+
+  toClaimPARCek() {
+    this.router.navigate(['/admin/claim-check/par']);
+  }
+
+  toClaimTravelCek() {
+    this.router.navigate(['/admin/claim-check/travel']);
+  }
+
 
 
 
@@ -145,6 +164,48 @@ export class ThesidebarComponent implements OnInit {
           if (claimTravel.transaction.transactionTravel.statusClaim === 'Proses Persetujuan'){
             this.totalNumberClaim += 1;
             this.numberClaimTravel += 1;
+          }
+        }
+      }, error => {
+        alert(error);
+      });
+  }
+
+  onGetClaimPAApprov(){
+    this.adminService.getClaimPA()
+      .subscribe(data => {
+        for (const claimPA of data) {
+          if (claimPA.transaction.transactionPA.statusClaim === 'data sesuai'){
+            this.totalNumberClaimApp += 1;
+            this.numberClaimPAAprov += 1;
+          }
+        }
+      }, error => {
+        alert(error);
+      });
+  }
+
+  onGetClaimPARApprov(){
+    this.adminService.getClaimPAR()
+      .subscribe(data => {
+        for (const claimPAR of data) {
+          if (claimPAR.transaction.transactionPAR.statusClaim === 'data sesuai'){
+            this.totalNumberClaimApp += 1;
+            this.numberClaimPARAprov += 1;
+          }
+        }
+      }, error => {
+        alert(error);
+      });
+  }
+
+  onGetClaimTravelApprov(){
+    this.adminService.getClaimTravel()
+      .subscribe(data => {
+        for (const claimTravel of data) {
+          if (claimTravel.transaction.transactionTravel.statusClaim === 'data sesuai'){
+            this.totalNumberClaimApp += 1;
+            this.numberClaimTravelAprov += 1;
           }
         }
       }, error => {
